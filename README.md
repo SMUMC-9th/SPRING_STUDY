@@ -40,7 +40,7 @@ Feat/#1
 커밋 메시지는 위의 컨벤션을 따라주세요.
 ```
 git add .
-git commit -m "✨ feat ~~~ 기능 구현"
+git commit -m "✨ feat : ~~~ 기능 구현"
 ```
 
 ## 5️⃣ 5. PR
