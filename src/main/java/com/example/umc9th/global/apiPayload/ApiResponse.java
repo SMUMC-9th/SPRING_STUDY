@@ -36,7 +36,7 @@ public class ApiResponse<T> {
 
     // 그 이외 성공 응답(result 포함)
     public static <T> ApiResponse<T> onSuccess(BaseSuccessCode code, T result) {
-        return new ApiResponse<T>(true, code.getCode()., code.getMessage(), result);
+        return new ApiResponse<T>(true, code.getCode(), code.getMessage(), result);
     }
 
     // 그 이외 성공 응답(result 미포함)
