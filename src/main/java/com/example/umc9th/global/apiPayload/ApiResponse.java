@@ -1,5 +1,6 @@
 package com.example.umc9th.global.apiPayload;
 
+import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc9th.global.apiPayload.code.BaseSuccessCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -26,12 +27,20 @@ public class ApiResponse<T> {
 
     // 200 OK
     public static <T> ApiResponse<T> ok() {
-        return new ApiResponse<T>(true, HttpStatus.OK.toString(), HttpStatus.OK.getReasonPhrase(), null );
+        return new ApiResponse<T>(true,
+                HttpStatus.OK.toString(),
+                HttpStatus.OK.getReasonPhrase(),
+                null
+        );
     }
 
     // 201 Created
-    public static <T> ApiResponse<T> created(String message) {
-        return new ApiResponse<T>(true, HttpStatus.CREATED.toString(), message, null );
+    public static <T> ApiResponse<T> created() {
+        return new ApiResponse<T>(true,
+                HttpStatus.CREATED.toString(),
+                HttpStatus.CREATED.getReasonPhrase(),
+                null
+        );
     }
 
     // 그 이외 성공 응답(result 포함)
@@ -45,12 +54,12 @@ public class ApiResponse<T> {
     }
 
     // 실패 응답(result 포함)
-    public static <T> ApiResponse<T> onFailure(BaseSuccessCode code, T result) {
+    public static <T> ApiResponse<T> onFailure(BaseErrorCode code, T result) {
         return new ApiResponse<T>(false, code.getCode(), code.getMessage(), result);
     }
 
     // 실패 응답(result 미포함)
-    public static <T> ApiResponse<T> onFailure(BaseSuccessCode code) {
+    public static <T> ApiResponse<T> onFailure(BaseErrorCode code) {
         return new ApiResponse<T>(false, code.getCode(),  code.getMessage(), null );
     }
 }
