@@ -20,8 +20,8 @@ public class TestController {
         summary = "테스트 API",
         description = "테스트용 API 입니다."
     )
-    public ResponseEntity<ApiResponse<String>> test() {
-        return ResponseEntity.ok(ApiResponse.onSuccess(GeneralSuccessCode.OK, "테스트 API 호출 성공 결과"));
+    public ApiResponse<String> test() {
+        return ApiResponse.onSuccess(GeneralSuccessCode.NO_CONTENT, "테스트 API 호출 성공 결과");
     }
 
     @GetMapping("/exception")
