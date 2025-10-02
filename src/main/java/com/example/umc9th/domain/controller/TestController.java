@@ -1,7 +1,9 @@
 package com.example.umc9th.domain.controller;
 
+import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
+import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,8 +19,8 @@ public class TestController {
             summary = "테스트하는 API",
             description = "요청을 보내면 Hello World를 응답으로 보냅니다."
     )
-    public String test(){
-        return "Hello World";
+    public ApiResponse<String> test(){
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK_200,"테스트 api 호출 성공");
     }
 
     @GetMapping("/exception")
