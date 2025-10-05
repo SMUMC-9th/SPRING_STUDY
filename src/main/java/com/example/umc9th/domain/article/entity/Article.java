@@ -30,14 +30,6 @@ public class Article extends BaseEntity {
     @Column(name = "like_num")
     private Integer likeNum;
 
-    @CreatedDate
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
-
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "reply_id")
     private Reply reply;
