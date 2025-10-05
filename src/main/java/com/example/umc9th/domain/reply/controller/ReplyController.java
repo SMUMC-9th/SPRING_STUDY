@@ -41,7 +41,7 @@ public class ReplyController {
 
     // 특정 댓글 조회
     @GetMapping("/replies/{replyId}")
-    public ApiResponse<Reply> getReply(
+    public ApiResponse<ReplyResponseDTO.GetReply> getReply(
             @PathVariable("replyId") Long replyId
     ) {
 
@@ -51,12 +51,15 @@ public class ReplyController {
         // 성공 코드 생성
         ReplySuccessCode code = ReplySuccessCode.FOUND;
 
-        return ApiResponse.onSuccess(code, reply);
+        // DTO 포장
+        ReplyResponseDTO.GetReply result = ReplyConverter.toGetReply(reply);
+
+        return ApiResponse.onSuccess(code, result);
     }
 
     // 전체 댓글 조회
     @GetMapping("/replies")
-    public ApiResponse<List<Reply>> getReplies(
+    public ApiResponse<ReplyResponseDTO.GetReplies> getReplies(
 
     ){
 
@@ -66,6 +69,9 @@ public class ReplyController {
         // 성공 코드 생성
         ReplySuccessCode code = ReplySuccessCode.FOUND;
 
-        return ApiResponse.onSuccess(code, replies);
+        // DTO 포장
+        ReplyResponseDTO.GetReplies result = ReplyConverter.toGetReplies(replies);
+
+        return ApiResponse.onSuccess(code, result);
     }
 }
