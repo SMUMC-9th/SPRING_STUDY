@@ -2,7 +2,8 @@ package com.example.umc9th.domain.reply.dto.response;
 
 import java.time.LocalDateTime;
 
-public record GetReplyResDTO(
+public record GetReplyWithArticleIdResDTO(
+        Long articleId,
         Long replyId,
         String content,
         LocalDateTime createdAt,

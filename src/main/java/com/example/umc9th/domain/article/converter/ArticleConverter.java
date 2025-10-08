@@ -13,7 +13,6 @@ public class ArticleConverter {
     public static GetArticleWithReplyResDTO toGetArticleResDTO(Article article) {
         List<GetReplyResDTO> replyList = article.getReplyList().stream()
                 .map(reply -> new GetReplyResDTO(
-                        reply.getArticle().getId(),
                         reply.getId(),
                         reply.getContent(),
                         reply.getCreatedAt(),

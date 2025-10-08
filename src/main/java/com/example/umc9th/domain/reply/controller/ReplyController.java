@@ -2,6 +2,7 @@ package com.example.umc9th.domain.reply.controller;
 
 import com.example.umc9th.domain.reply.dto.request.ReplyReqDTO;
 import com.example.umc9th.domain.reply.dto.response.GetReplyResDTO;
+import com.example.umc9th.domain.reply.dto.response.GetReplyWithArticleIdResDTO;
 import com.example.umc9th.domain.reply.service.command.ReplyCommandService;
 import com.example.umc9th.domain.reply.service.query.ReplyQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -35,11 +36,11 @@ public class ReplyController {
 
     @GetMapping("/{articleId}")
     @Operation(method = "GET", summary = "댓글 목록 조회 API", description = "특정 게시글의 댓글 목록을 조회합니다.")
-    public ApiResponse<List<GetReplyResDTO>> getReplyList(
+    public ApiResponse<List<GetReplyWithArticleIdResDTO>> getReplyList(
             @Parameter(description = "댓글 목록을 조회할 게시글 Id", required = true)
             @PathVariable("articleId") Long articleId
     ) {
-        List<GetReplyResDTO> replyList = replyQueryService.getReplyList(articleId);
+        List<GetReplyWithArticleIdResDTO> replyList = replyQueryService.getReplyList(articleId);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, replyList);
     }
 }

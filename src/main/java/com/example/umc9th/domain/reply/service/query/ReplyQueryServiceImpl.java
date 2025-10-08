@@ -1,6 +1,6 @@
 package com.example.umc9th.domain.reply.service.query;
 
-import com.example.umc9th.domain.reply.dto.response.GetReplyResDTO;
+import com.example.umc9th.domain.reply.dto.response.GetReplyWithArticleIdResDTO;
 import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.domain.reply.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.example.umc9th.domain.reply.converter.ReplyConverter.toGetReplyResDTO;
+import static com.example.umc9th.domain.reply.converter.ReplyConverter.toGetReplyWithArticleIdResDTO;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,9 +19,9 @@ public class ReplyQueryServiceImpl implements ReplyQueryService {
     private final ReplyRepository replyRepository;
 
     @Override
-    public List<GetReplyResDTO> getReplyList(Long articleId) {
+    public List<GetReplyWithArticleIdResDTO> getReplyList(Long articleId) {
         List<Reply> replyList = replyRepository.findByArticleId(articleId);
 
-        return toGetReplyResDTO(replyList);
+        return toGetReplyWithArticleIdResDTO(replyList);
     }
 }

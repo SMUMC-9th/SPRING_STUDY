@@ -1,9 +1,9 @@
 package com.example.umc9th.domain.reply.service.query;
 
-import com.example.umc9th.domain.reply.dto.response.GetReplyResDTO;
+import com.example.umc9th.domain.reply.dto.response.GetReplyWithArticleIdResDTO;
 
 import java.util.List;
 
 public interface ReplyQueryService {
-    List<GetReplyResDTO> getReplyList(Long id);
+    List<GetReplyWithArticleIdResDTO> getReplyList(Long id);
 }
