@@ -1,6 +1,7 @@
 package com.example.umc9th.domain.article.service.query;
 
 import com.example.umc9th.domain.article.dto.response.GetArticleResDTO;
+import com.example.umc9th.domain.article.dto.response.GetArticleWithReplyResDTO;
 import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.exception.ArticleErrorCode;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
@@ -21,7 +22,7 @@ public class ArticleQueryServiceImpl implements ArticleQueryService {
     private final ArticleRepository articleRepository;
 
     @Override
-    public GetArticleResDTO getArticle(Long id) {
+    public GetArticleWithReplyResDTO getArticle(Long id) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));
         return toGetArticleResDTO(article);
