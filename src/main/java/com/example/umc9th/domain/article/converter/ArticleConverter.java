@@ -2,7 +2,7 @@ package com.example.umc9th.domain.article.converter;
 
 import com.example.umc9th.domain.article.dto.response.GetArticleResDTO;
 import com.example.umc9th.domain.article.entity.Article;
-import com.example.umc9th.domain.reply.dto.response.ReplyResDTO;
+import com.example.umc9th.domain.reply.dto.response.GetReplyResDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 public class ArticleConverter {
 
     public static GetArticleResDTO toGetArticleResDTO(Article article) {
-        List<ReplyResDTO> replyList = article.getReplyList().stream()
-                .map(reply -> new ReplyResDTO(
+        List<GetReplyResDTO> replyList = article.getReplyList().stream()
+                .map(reply -> new GetReplyResDTO(
+                        reply.getArticle().getId(),
                         reply.getId(),
                         reply.getContent(),
                         reply.getCreatedAt(),

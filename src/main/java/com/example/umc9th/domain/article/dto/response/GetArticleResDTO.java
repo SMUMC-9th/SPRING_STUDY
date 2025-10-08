@@ -1,6 +1,6 @@
 package com.example.umc9th.domain.article.dto.response;
 
-import com.example.umc9th.domain.reply.dto.response.ReplyResDTO;
+import com.example.umc9th.domain.reply.dto.response.GetReplyResDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +12,6 @@ public record GetArticleResDTO(
     LocalDateTime createdAt,
     LocalDateTime updatedAt,
     int likeNum,
-    List<ReplyResDTO> replyList
+    List<GetReplyResDTO> replyList
 ) {
 }
