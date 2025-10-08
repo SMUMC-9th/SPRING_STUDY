@@ -2,7 +2,6 @@ package com.example.umc9th.domain.article.controller;
 
 import com.example.umc9th.domain.article.dto.request.ArticleReqDTO;
 import com.example.umc9th.domain.article.dto.response.GetArticleResDTO;
-import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.service.command.ArticleCommandService;
 import com.example.umc9th.domain.article.service.query.ArticleQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -13,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.example.umc9th.domain.article.converter.ArticleConverter.toGetArticleResDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,8 +24,8 @@ public class ArticleController {
     @PostMapping("")
     @Operation(method = "POST", summary = "Article 작성 API", description = "Article을 작성합니다.")
     public ApiResponse<GetArticleResDTO> createArticle(@RequestBody ArticleReqDTO dto) {
-        Article article = articleCommandService.createArticle(dto);
-        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED_201, toGetArticleResDTO(article));
+        GetArticleResDTO article = articleCommandService.createArticle(dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED_201, article);
     }
 
     @GetMapping("/{articleId}")
