@@ -1,8 +1,11 @@
 package com.example.umc9th.domain.article.entity;
 
+import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 
 @Entity
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -21,4 +24,10 @@ public class Article extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+    ArrayList<Reply> replies = new ArrayList<>();
+
+    public void addReply(Reply reply){
+        replies.add(reply);
+    }
 }
