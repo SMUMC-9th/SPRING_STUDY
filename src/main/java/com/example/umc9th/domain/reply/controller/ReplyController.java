@@ -51,10 +51,7 @@ public class ReplyController {
         // 성공 코드 생성
         ReplySuccessCode code = ReplySuccessCode.FOUND;
 
-        // DTO 포장
-        ReplyResponseDTO.GetReply result = ReplyConverter.toGetReply(reply);
-
-        return ApiResponse.onSuccess(code, result);
+        return ApiResponse.onSuccess(code, ReplyConverter.toGetReply(reply));
     }
 
     // 전체 댓글 조회
@@ -69,9 +66,6 @@ public class ReplyController {
         // 성공 코드 생성
         ReplySuccessCode code = ReplySuccessCode.FOUND;
 
-        // DTO 포장
-        ReplyResponseDTO.GetReplies result = ReplyConverter.toGetReplies(replies);
-
-        return ApiResponse.onSuccess(code, result);
+        return ApiResponse.onSuccess(code, ReplyConverter.toGetReplies(replies));
     }
 }

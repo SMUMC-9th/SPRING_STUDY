@@ -6,6 +6,7 @@ public class ReplyRequestDTO {
 
     @Builder
     public record CreateReply(
-            String content
+            String content,
+            Long articleId
     ){}
 }

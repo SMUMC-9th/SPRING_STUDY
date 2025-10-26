@@ -1,6 +1,9 @@
 package com.example.umc9th.domain.article.controller;
 
+import com.example.umc9th.domain.article.converter.ArticleConverter;
 import com.example.umc9th.domain.article.dto.req.ArticleRequestDTO;
+import com.example.umc9th.domain.article.dto.res.ArticleResponseDTO;
+import com.example.umc9th.domain.article.dto.res.ArticleResponseDTO.GetAllArticles;
 import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.exception.code.ArticleSuccessCode;
 import com.example.umc9th.domain.article.service.command.ArticleCommandService;
@@ -20,7 +23,7 @@ public class ArticleController {
 
     // 게시글 생성
     @PostMapping("/articles")
-    public ApiResponse<Article> createArticle(
+    public ApiResponse<ArticleResponseDTO.CreateArticle> createArticle(
             @RequestBody ArticleRequestDTO.CreateArticleDTO dto
     ) {
 
@@ -31,12 +34,12 @@ public class ArticleController {
         ArticleSuccessCode code = ArticleSuccessCode.CREATE;
 
         // 응답 통일
-        return ApiResponse.onSuccess(code, article);
+        return ApiResponse.onSuccess(code, ArticleConverter.toCreateArticleDTO(article));
     }
 
     // 특정 게시글 조회
     @GetMapping("/articles/{articleId}")
-    public ApiResponse<Article> getArticle(
+    public ApiResponse<ArticleResponseDTO.GetArticle> getArticle(
             @PathVariable("articleId") Long articleId
     ) {
 
@@ -46,12 +49,12 @@ public class ArticleController {
         // 성공 코드 생성
         ArticleSuccessCode code = ArticleSuccessCode.FOUND;
 
-        return ApiResponse.onSuccess(code, article);
+        return ApiResponse.onSuccess(code, ArticleConverter.toGetArticleDTO(article));
     }
 
     // 전체 게시글 조회
     @GetMapping("/articles")
-    public ApiResponse<List<Article>> getArticles(
+    public ApiResponse<GetAllArticles<Article>> getArticles(
 
     ){
 
@@ -61,6 +64,15 @@ public class ArticleController {
         // 성공 코드 생성
         ArticleSuccessCode code = ArticleSuccessCode.FOUND;
 
-        return ApiResponse.onSuccess(code, articles);
+        return ApiResponse.onSuccess(code, ArticleConverter.toGetAllArticlesDTO(articles));
     }
+
+    // 게시글 수정
+    @PatchMapping("/articles")
+    public ApiResponse<Article> updateArticle(
+    ){
+        return null;
+    }
+
+    // 게시글 삭제
 }
