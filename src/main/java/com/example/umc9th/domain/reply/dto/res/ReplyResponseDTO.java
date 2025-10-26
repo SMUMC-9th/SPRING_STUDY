@@ -25,4 +25,10 @@ public class ReplyResponseDTO {
     public record GetReplies(
             List<GetReply> replies
     ){}
+
+    // 댓글 수정
+    @Builder
+    public record UpdateReply(
+            Long id
+    ){}
 }

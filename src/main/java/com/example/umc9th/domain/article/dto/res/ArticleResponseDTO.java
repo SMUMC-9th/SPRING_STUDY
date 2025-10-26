@@ -26,4 +26,10 @@ public class ArticleResponseDTO {
     public record GetAllArticles <T>(
         List<T> articles
     ){}
+
+    // 게시글 수정
+    @Builder
+    public record UpdateArticle(
+            Long id
+    ){}
 }

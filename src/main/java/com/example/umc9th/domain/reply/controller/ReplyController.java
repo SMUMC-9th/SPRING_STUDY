@@ -68,4 +68,16 @@ public class ReplyController {
 
         return ApiResponse.onSuccess(code, ReplyConverter.toGetReplies(replies));
     }
+
+    // 댓글 수정
+    @PutMapping("/replies/{replyId}")
+    public ApiResponse<ReplyResponseDTO.UpdateReply> updateReply(
+            @PathVariable("replyId") Long replyId,
+            @RequestBody ReplyRequestDTO.UpdateReply dto
+    ){
+
+        ReplySuccessCode code = ReplySuccessCode.PUT_SUCCESS;
+        return ApiResponse.onSuccess(code, replyCommandService.updateReply(replyId, dto));
+
+    }
 }

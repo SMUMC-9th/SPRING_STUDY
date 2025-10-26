@@ -49,4 +49,13 @@ public class ArticleConverter {
                 .articles(articles)
                 .build();
     }
+
+    // 게시글 수정
+    public static ArticleResponseDTO.UpdateArticle toUpdateArticleDTO(
+            Article article
+    ){
+        return ArticleResponseDTO.UpdateArticle.builder()
+                .id(article.getId())
+                .build();
+    }
 }

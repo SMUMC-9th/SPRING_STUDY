@@ -25,4 +25,12 @@ public class Article extends BaseEntity {
     @Column(name = "like_num")
     @Builder.Default
     private Integer likeNum = 0;
+
+    // update
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

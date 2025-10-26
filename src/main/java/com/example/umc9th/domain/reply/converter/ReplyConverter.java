@@ -52,4 +52,13 @@ public class ReplyConverter {
                 .replies(replies.stream().map(ReplyConverter::toGetReply).toList())
                 .build();
     }
+
+    // 댓글 수정
+    public static ReplyResponseDTO.UpdateReply toUpdateReply(
+            Reply reply
+    ){
+        return ReplyResponseDTO.UpdateReply.builder()
+                .id(reply.getId())
+                .build();
+    }
 }

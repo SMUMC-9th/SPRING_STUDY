@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,10 +69,19 @@ public class ArticleController {
     }
 
     // 게시글 수정
-    @PatchMapping("/articles")
-    public ApiResponse<Article> updateArticle(
+    @PatchMapping("/articles/{articleId}")
+    public ApiResponse<ArticleResponseDTO.UpdateArticle> updateArticle(
+            @PathVariable("articleId") Long articleId,
+            @RequestBody ArticleRequestDTO.UpdateArticleDTO dto
     ){
-        return null;
+        Optional<ArticleResponseDTO.UpdateArticle> article = articleCommandService.updateArticle(articleId, dto);
+        if (article.isPresent()){
+            ArticleSuccessCode code = ArticleSuccessCode.PATCH_SUCCESS;
+            return ApiResponse.onSuccess(code, article.get());
+        } else {
+            ArticleSuccessCode code = ArticleSuccessCode.NO_CONTENT;
+            return ApiResponse.onSuccess(code, null);
+        }
     }
 
     // 게시글 삭제

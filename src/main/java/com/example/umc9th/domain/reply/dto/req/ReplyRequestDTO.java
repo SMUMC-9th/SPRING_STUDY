@@ -9,4 +9,10 @@ public class ReplyRequestDTO {
             String content,
             Long articleId
     ){}
+
+    // 댓글 수정
+    public record UpdateReply(
+            Long articleId,
+            String content
+    ){}
 }
