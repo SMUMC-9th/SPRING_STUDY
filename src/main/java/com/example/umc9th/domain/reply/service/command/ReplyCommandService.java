@@ -13,4 +13,9 @@ public interface ReplyCommandService {
             Long replyId,
             ReplyRequestDTO.UpdateReply dto
     );
+
+    // 댓글 삭제
+    ReplyResponseDTO.DeleteReply deleteReply(
+            Long replyId
+    );
 }

@@ -65,4 +65,23 @@ public class ArticleCommandServiceImpl implements ArticleCommandService {
             return Optional.empty();
         }
     }
+
+    // 게시글 삭제 (Soft Delete)
+    @Override
+    public ArticleResponseDTO.DeleteArticle deleteArticle(
+            Long articleId
+    ){
+
+        // 존재 여부 확인
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleException(ArticleErrorCode.NOT_FOUND));
+
+        // 삭제 처리: JPA Delete
+        articleRepository.delete(article);
+
+        // 삭제처리: 메서드
+        // articleRepository.softDelete(articleId);
+
+        return ArticleConverter.toDeleteArticleDTO(article);
+    }
 }

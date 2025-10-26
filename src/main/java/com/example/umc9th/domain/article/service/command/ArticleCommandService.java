@@ -14,4 +14,9 @@ public interface ArticleCommandService {
             Long articleId,
             ArticleRequestDTO.UpdateArticleDTO dto
     );
+
+    // 게시글 삭제 (Soft Delete)
+    ArticleResponseDTO.DeleteArticle deleteArticle(
+            Long articleId
+    );
 }

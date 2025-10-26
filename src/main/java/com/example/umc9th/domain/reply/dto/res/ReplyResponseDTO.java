@@ -31,4 +31,10 @@ public class ReplyResponseDTO {
     public record UpdateReply(
             Long id
     ){}
+
+    // 댓글 삭제
+    @Builder
+    public record DeleteReply(
+            Long id
+    ){}
 }

@@ -58,4 +58,13 @@ public class ArticleConverter {
                 .id(article.getId())
                 .build();
     }
+
+    // 게시글 삭제
+    public static ArticleResponseDTO.DeleteArticle toDeleteArticleDTO(
+            Article article
+    ){
+        return ArticleResponseDTO.DeleteArticle.builder()
+                .id(article.getId())
+                .build();
+    }
 }

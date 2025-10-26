@@ -61,4 +61,13 @@ public class ReplyConverter {
                 .id(reply.getId())
                 .build();
     }
+
+    // 댓글 삭제
+    public static ReplyResponseDTO.DeleteReply toDeleteReply(
+            Reply reply
+    ){
+        return ReplyResponseDTO.DeleteReply.builder()
+                .id(reply.getId())
+                .build();
+    }
 }

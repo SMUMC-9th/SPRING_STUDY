@@ -66,4 +66,19 @@ public class ReplyCommandServiceImpl implements ReplyCommandService {
 
         return ReplyConverter.toUpdateReply(reply);
     }
+
+    // 댓글 삭제
+    @Override
+    public ReplyResponseDTO.DeleteReply deleteReply(
+            Long replyId
+    ){
+        // 존재여부 확인
+        Reply reply = replyRepository.findById(replyId)
+                .orElseThrow(() -> new ReplyException(ReplyErrorCode.NOT_FOUND));
+
+        // 삭제 처리
+        replyRepository.delete(reply);
+
+        return ReplyConverter.toDeleteReply(reply);
+    }
 }

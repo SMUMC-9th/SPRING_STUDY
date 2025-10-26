@@ -80,4 +80,13 @@ public class ReplyController {
         return ApiResponse.onSuccess(code, replyCommandService.updateReply(replyId, dto));
 
     }
+
+    // 댓글 삭제
+    @DeleteMapping("/replies/{replyId}")
+    public ApiResponse<ReplyResponseDTO.DeleteReply> deleteReply(
+            @PathVariable("replyId") Long replyId
+    ){
+        ReplySuccessCode code = ReplySuccessCode.DELETE;
+        return ApiResponse.onSuccess(code, replyCommandService.deleteReply(replyId));
+    }
 }

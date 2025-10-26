@@ -85,4 +85,11 @@ public class ArticleController {
     }
 
     // 게시글 삭제
+    @DeleteMapping("/articles/{articleId}")
+    public ApiResponse<ArticleResponseDTO.DeleteArticle> deleteArticle(
+            @PathVariable("articleId") Long articleId
+    ){
+        ArticleSuccessCode code = ArticleSuccessCode.DELETE;
+        return ApiResponse.onSuccess(code, articleCommandService.deleteArticle(articleId));
+    }
 }

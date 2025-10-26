@@ -18,6 +18,9 @@ public enum ReplySuccessCode implements BaseSuccessCode {
     PUT_SUCCESS(HttpStatus.OK,
             "REPLY200",
             "성공적으로 댓글을 수정했습니다."),
+    DELETE(HttpStatus.OK,
+            "REPLY200",
+            "성공적으로 댓글을 삭제했습니다."),
     ;
 
     private final HttpStatus status;

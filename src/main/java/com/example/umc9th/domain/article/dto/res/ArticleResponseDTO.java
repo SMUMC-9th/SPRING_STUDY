@@ -32,4 +32,10 @@ public class ArticleResponseDTO {
     public record UpdateArticle(
             Long id
     ){}
+
+    // 게시글 삭제
+    @Builder
+    public record DeleteArticle(
+            Long id
+    ){}
 }
