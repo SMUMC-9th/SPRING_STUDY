@@ -1,12 +1,12 @@
 package com.example.umc9th.domain.reply.dto;
 
-import lombok.Getter;
+import lombok.Builder;
 
 public class ReplyRequestDTO {
 
-    @Getter
-    public static class CreateReplyDTO {
-        private String content;
-        private Long articleId;
-    }
+    //요청 DTO
+    @Builder
+    public record CreateReplyDTO (
+            String content
+    ){}
 }
