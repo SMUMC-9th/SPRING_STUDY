@@ -1,11 +1,12 @@
 package com.example.umc9th.domain.article.dto;
 
-import lombok.Getter;
+import lombok.Builder;
 
+//게시글 생성 요청 DTO
 public class ArticleRequestDTO {
-    @Getter
-    public static class CreateArticleDTO {
-        private String title;
-        private String content;
-    }
+    @Builder
+    public record CreateArticleDTO(
+            String title,
+            String content
+    ) {}
 }
