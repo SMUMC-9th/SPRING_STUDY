@@ -71,4 +71,16 @@ public class ArticleService {
         return articleConverter.toArticleDTO(article);
 
     }
+
+    //소프트 삭제
+    @Transactional
+    public Long deleteArticle(
+            Long id
+    ){
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND_404)
+        );
+        articleRepository.delete(article);
+        return id;
+    }
 }

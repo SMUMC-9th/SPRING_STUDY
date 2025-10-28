@@ -26,7 +26,7 @@ public class Article extends BaseEntity {
     @Column(name = "like_num")
     private Integer likeNum;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "reply_id")
     private Reply reply;
 

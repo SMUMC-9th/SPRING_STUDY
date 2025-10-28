@@ -57,4 +57,13 @@ public class ArticleController {
         ArticleResponseDTO.ArticleDTO response = articleService.patchArticle(id, dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
+
+    //삭제
+    @DeleteMapping("/article/{id}/delete")
+    public ApiResponse<Long> delete(
+            @PathVariable Long id
+    ) {
+        Long deletedId = articleService.deleteArticle(id);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, deletedId);
+    }
 }
