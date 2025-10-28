@@ -46,4 +46,15 @@ public class ReplyController {
         List<ReplyResponseDTO.ReplyDTO> response = replyQueryService.getRepliesByArticleId(articleId);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
+
+    @PutMapping("/{replyId}")
+    @Operation(
+        summary = "댓글 수정 API"
+    )
+    public ApiResponse<ReplyResponseDTO.UpdateReplyResponseDTO> updateReply(
+        @PathVariable("replyId") Long replyId,
+        @RequestBody ReplyRequestDTO.UpdateReplyDTO dto) {
+        ReplyResponseDTO.UpdateReplyResponseDTO response = replyCommandService.updateReply(replyId, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
 }

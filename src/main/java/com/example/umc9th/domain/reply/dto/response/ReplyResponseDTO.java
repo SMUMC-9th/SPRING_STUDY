@@ -39,4 +39,22 @@ public class ReplyResponseDTO {
                 .collect(Collectors.toList());
         }
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateReplyResponseDTO {
+        private Long id;
+        private String content;
+        private LocalDateTime updatedAt;
+
+        public static UpdateReplyResponseDTO from(Reply reply) {
+            return UpdateReplyResponseDTO.builder()
+                .id(reply.getId())
+                .content(reply.getContent())
+                .updatedAt(reply.getUpdatedAt())
+                .build();
+        }
+    }
 }
