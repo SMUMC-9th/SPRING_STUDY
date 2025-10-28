@@ -37,4 +37,10 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
         return article;
     }
 
+    @Override
+    public void deleteArticle(Long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        articleRepository.delete(article);
+    }
 }
