@@ -45,4 +45,13 @@ public class ArticleController {
         List<Article> articleList = articleQueryService.getArticles();
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, articleList);
     }
+
+    @PatchMapping("/articles/{articleId}")
+    //articleId와 수정된 내용이 담긴 articleDTO를 받아온다.
+    public ApiResponse<Article> updateArticle(@PathVariable("articleId") Long articleId, @RequestBody ArticleRequestDTO.UpdateArticleDTO dto) {
+        // 서비스에서 처리
+        Article updatedArticle = articleCommandService.updateArticle(articleId, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, updatedArticle);
+    }
+
 }
