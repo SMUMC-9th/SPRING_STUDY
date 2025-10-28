@@ -82,4 +82,14 @@ public class ReplyService {
         return replyConverter.toReplyDTO(reply);
 
     }
+
+    //삭제
+    @Transactional
+    public Long deleteReply(Long id) {
+        Reply reply = replyRepository.findById(id).orElseThrow(
+                () -> new GeneralException(GeneralErrorCode.NOT_FOUND_404)
+        );
+        replyRepository.delete(reply);
+        return id;
+    }
 }

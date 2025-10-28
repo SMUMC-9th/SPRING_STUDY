@@ -64,4 +64,11 @@ public class ReplyController {
         ReplyResponseDTO.ReplyDTO response = replyService.patchReply(id, dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
+
+    //삭제
+    @DeleteMapping("/replies/{id}")
+    public ApiResponse<Long> delete(@PathVariable Long id) {
+        Long deletedId = replyService.deleteReply(id);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, deletedId);
+    }
 }
