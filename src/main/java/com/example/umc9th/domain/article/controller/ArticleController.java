@@ -68,4 +68,14 @@ public class ArticleController {
         ArticleResponseDTO.UpdateArticleResponseDTO response = articleCommandService.patchArticle(articleId, dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
+
+    @DeleteMapping("/{articleId}")
+    @Operation(
+        summary = "게시글 삭제 API (Soft Delete)"
+    )
+    public ApiResponse<ArticleResponseDTO.DeleteArticleResponseDTO> deleteArticle(
+        @PathVariable("articleId") Long articleId) {
+        ArticleResponseDTO.DeleteArticleResponseDTO response = articleCommandService.deleteArticle(articleId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
 }

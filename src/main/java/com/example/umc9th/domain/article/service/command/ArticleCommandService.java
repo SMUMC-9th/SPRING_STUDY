@@ -7,4 +7,5 @@ public interface ArticleCommandService {
     ArticleResponseDTO.CreateArticleResponseDTO createArticle(ArticleRequestDTO.CreateArticleDTO dto);
     ArticleResponseDTO.UpdateArticleResponseDTO updateArticle(Long id, ArticleRequestDTO.UpdateArticleDTO dto);
     ArticleResponseDTO.UpdateArticleResponseDTO patchArticle(Long id, ArticleRequestDTO.PatchArticleDTO dto);
+    ArticleResponseDTO.DeleteArticleResponseDTO deleteArticle(Long id);
 }

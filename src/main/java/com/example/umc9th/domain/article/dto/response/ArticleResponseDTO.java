@@ -102,4 +102,20 @@ public class ArticleResponseDTO {
                 .build();
         }
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DeleteArticleResponseDTO {
+        private Long id;
+        private LocalDateTime deletedAt;
+
+        public static DeleteArticleResponseDTO of(Long id) {
+            return DeleteArticleResponseDTO.builder()
+                .id(id)
+                .deletedAt(LocalDateTime.now())
+                .build();
+        }
+    }
 }

@@ -50,4 +50,14 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
 
         return ArticleResponseDTO.UpdateArticleResponseDTO.from(article);
     }
+
+    @Override
+    public ArticleResponseDTO.DeleteArticleResponseDTO deleteArticle(Long id) {
+        Article article = articleRepository.findById(id)
+            .orElseThrow(() -> new ArticleException(ArticleErrorCode.ARTICLE_NOT_FOUND));
+
+        article.delete();
+
+        return ArticleResponseDTO.DeleteArticleResponseDTO.of(id);
+    }
 }
