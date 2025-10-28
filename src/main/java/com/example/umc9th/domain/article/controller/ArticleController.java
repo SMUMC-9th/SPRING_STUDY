@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.article.controller;
 
+import com.example.umc9th.domain.article.converter.ArticleConverter;
 import com.example.umc9th.domain.article.dto.request.ArticleRequestDTO;
 import com.example.umc9th.domain.article.dto.response.ArticleResponseDTO;
 import com.example.umc9th.domain.article.entity.Article;
@@ -7,11 +8,15 @@ import com.example.umc9th.domain.article.service.command.ArticleCommandService;
 import com.example.umc9th.domain.article.service.query.ArticleQueryService;
 import com.example.umc9th.global.apiPaylode.ApiResponse;
 import com.example.umc9th.global.exception.GeneralSuccessCode;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@Tag(name = "Article", description = "게시글 관련 API")
 // RestController 명시
 @RestController
 // 생성자 의존성 주입을 위한 Annotation (private final로 정의된 필드에 의존성 주입)
@@ -21,6 +26,8 @@ public class ArticleController {
     private final ArticleQueryService articleQueryService;
     private final ArticleCommandService articleCommandService;
 
+
+    @Operation(summary = "게시글 생성", description = "제목과 내용을 입력하여 게시글을 생성합니다.")
     // 생성이므로 POST method 사용
     @PostMapping("/articles")
     // 요청 시 데이터를 담을 DTO를 설정해주고 RequestBody라는 것을 명시
@@ -31,6 +38,8 @@ public class ArticleController {
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED,article);
     }
 
+
+    @Operation(summary = "단일 게시글 조회", description = "게시글 ID로 상세 조회합니다.")
     // 생성이므로 GET method 사용
     // 뒤에 ID 값을 놓도록 설정 ex) /article/1로 요청이 오면 1을 변수로 사용
     @GetMapping("/articles/{articleId}")
@@ -43,6 +52,8 @@ public class ArticleController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK,response);
     }
 
+
+    @Operation(summary = "전체 게시글 조회", description = "전체 게시글 목록을 조회합니다.")
     @GetMapping("/articles")
     public ApiResponse<List<Article>> getArticles() {
 
@@ -50,5 +61,27 @@ public class ArticleController {
 
         return ApiResponse.onSuccess(GeneralSuccessCode.OK,articleList);
     }
+
+
+    @Operation(summary = "게시글 수정", description = "게시글 ID로 제목/내용을 수정합니다.")
+    @PatchMapping("/articles/{articleId}")
+    public ApiResponse<ArticleResponseDTO.UpdateArticleResDTO> updateArticle(
+            @PathVariable Long articleId,
+            @RequestBody ArticleRequestDTO.UpdateArticleReqDTO request
+    ) {
+        Article updatedArticle = articleCommandService.updateArticle(articleId, request);
+        // Converter를 사용하여 DTO 변환
+        ArticleResponseDTO.UpdateArticleResDTO response = ArticleConverter.toUpdateResDTO(updatedArticle);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+    @Operation(summary = "게시글 삭제", description = "게시글 ID로 게시글을 삭제합니다.")
+    @DeleteMapping("/articles/{articleId}")
+    public ApiResponse<Void> deleteArticle(@PathVariable("articleId") Long articleId) {
+        articleCommandService.deleteArticle(articleId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
+    }
+
+
 }
 

@@ -9,4 +9,10 @@ public class ArticleRequestDTO {
             String title,
             String content
     ) {}
+
+    @Builder
+    public record UpdateArticleReqDTO (
+            String title,
+            String content
+    ){}
 }

@@ -25,4 +25,16 @@ public class ArticleConverter {
                 .updatedAt(article.getUpdatedAt())
                 .build();
     }
+
+    // DTO -> Entity 업데이트
+    public static ArticleResponseDTO.UpdateArticleResDTO toUpdateResDTO(Article article) {
+        return ArticleResponseDTO.UpdateArticleResDTO.builder()
+                .articleId(article.getId())
+                .title(article.getTitle())
+                .content(article.getContent())
+                .likeNum(article.getLikeNum())
+                .createdAt(article.getCreatedAt())
+                .updatedAt(article.getUpdatedAt())
+                .build();
+    }
 }
