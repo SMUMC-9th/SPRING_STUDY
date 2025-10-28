@@ -64,6 +64,12 @@ public class ArticleController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
 
+    @DeleteMapping("/articles/{articleId}")
+    public ApiResponse<Void> deleteArticle(@PathVariable("articleId") Long articleId) {
+        articleCommandService.deleteArticle(articleId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
+    }
+
 
 }
 

@@ -34,4 +34,11 @@ public class ArticleCommandServiceImpl implements ArticleCommandService {
         // 더티 체킹
         return article;
     }
+
+    @Override
+    public void deleteArticle(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ArticleException(ArticleErrorCode.ARTICLE_NOT_FOUND));
+        articleRepository.delete(article);
+    }
 }
