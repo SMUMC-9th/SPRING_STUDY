@@ -21,7 +21,6 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final ArticleRepository articleRepository;
-    private final ReplyConverter replyConverter;
 
     //댓글 생성
     @Transactional
@@ -66,7 +65,7 @@ public class ReplyService {
         Reply reply = replyRepository.findById(id).orElseThrow(() ->
                 new GeneralException(GeneralErrorCode.NOT_FOUND_404));
         reply.update(dto.content());
-        return replyConverter.toReplyDTO(reply);
+        return ReplyConverter.toReplyDTO(reply);
 
     }
 
@@ -79,7 +78,7 @@ public class ReplyService {
         Reply reply = replyRepository.findById(id).orElseThrow(() ->
                 new GeneralException(GeneralErrorCode.NOT_FOUND_404));
         reply.patch(dto.content());
-        return replyConverter.toReplyDTO(reply);
+        return ReplyConverter.toReplyDTO(reply);
 
     }
 

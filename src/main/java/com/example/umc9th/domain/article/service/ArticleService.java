@@ -18,8 +18,8 @@ import java.util.List;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final ArticleConverter articleConverter;
 
+    //게시글 생성
     @Transactional
     public ArticleResponseDTO.ArticleDTO createArticle(
             ArticleRequestDTO.CreateArticleDTO dto
@@ -29,7 +29,8 @@ public class ArticleService {
         return ArticleConverter.toArticleDTO(saved);
     }
 
-    @Transactional
+    //게시글 조회
+    @Transactional(readOnly = true)
     public ArticleResponseDTO.ArticleDTO getArticle(
             Long id
     ) {
@@ -38,7 +39,8 @@ public class ArticleService {
         return ArticleConverter.toArticleDTO(article);
     }
 
-    @Transactional
+    //게시글 목록 조회
+    @Transactional(readOnly = true)
     public ArticleResponseDTO.ArticleListDTO getArticles(
 
     ) {
@@ -55,7 +57,7 @@ public class ArticleService {
         Article article = articleRepository.findById(id).orElseThrow(() ->
                 new GeneralException(GeneralErrorCode.NOT_FOUND_404));
         article.update(dto.content());
-        return articleConverter.toArticleDTO(article);
+        return ArticleConverter.toArticleDTO(article);
 
     }
 
@@ -68,11 +70,11 @@ public class ArticleService {
         Article article = articleRepository.findById(id).orElseThrow(() ->
                 new GeneralException(GeneralErrorCode.NOT_FOUND_404));
         article.patch(dto.content());
-        return articleConverter.toArticleDTO(article);
+        return ArticleConverter.toArticleDTO(article);
 
     }
 
-    //소프트 삭제
+    //삭제
     @Transactional
     public Long deleteArticle(
             Long id

@@ -5,6 +5,9 @@ import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "article")
 @Builder
@@ -26,9 +29,8 @@ public class Article extends BaseEntity {
     @Column(name = "like_num")
     private Integer likeNum;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "reply_id")
-    private Reply reply;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "article")
+    private List<Reply> replies = new ArrayList<>();
 
     public void update(String content) {
         this.content = content;
