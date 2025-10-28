@@ -35,4 +35,12 @@ public class ReplyCommandServiceImpl implements ReplyCommandService{
         //결과 반환
         return replyRepository.save(reply);
     }
+
+    @Override
+    public Reply updateReply(Long replyId, ReplyRequestDTO.UpdateReplyDTO dto) {
+        Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        reply.update(dto.getTitle(), dto.getContent());
+        return reply;
+    }
+
 }
