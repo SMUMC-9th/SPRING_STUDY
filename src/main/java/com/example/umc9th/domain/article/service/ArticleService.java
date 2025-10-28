@@ -18,6 +18,7 @@ import java.util.List;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final ArticleConverter articleConverter;
 
     @Transactional
     public ArticleResponseDTO.ArticleDTO createArticle(
@@ -43,5 +44,31 @@ public class ArticleService {
     ) {
         List<Article> all = articleRepository.findAll();
         return ArticleConverter.toListDTO(all);
+    }
+
+    //전체 수정
+    @Transactional
+    public ArticleResponseDTO.ArticleDTO putArticle(
+            Long id,
+            ArticleRequestDTO.PutDTO dto
+    ) {
+        Article article = articleRepository.findById(id).orElseThrow(() ->
+                new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        article.update(dto.content());
+        return articleConverter.toArticleDTO(article);
+
+    }
+
+    //부분 수정
+    @Transactional
+    public ArticleResponseDTO.ArticleDTO patchArticle(
+            Long id,
+            ArticleRequestDTO.PatchDTO dto
+    ) {
+        Article article = articleRepository.findById(id).orElseThrow(() ->
+                new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        article.patch(dto.content());
+        return articleConverter.toArticleDTO(article);
+
     }
 }
