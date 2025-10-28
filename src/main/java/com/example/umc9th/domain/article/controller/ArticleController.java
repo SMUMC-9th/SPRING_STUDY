@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.article.controller;
 
+import com.example.umc9th.domain.article.converter.ArticleConverter;
 import com.example.umc9th.domain.article.dto.request.ArticleRequestDTO;
 import com.example.umc9th.domain.article.dto.response.ArticleResponseDTO;
 import com.example.umc9th.domain.article.entity.Article;
@@ -50,5 +51,19 @@ public class ArticleController {
 
         return ApiResponse.onSuccess(GeneralSuccessCode.OK,articleList);
     }
+
+
+    @PatchMapping("/articles/{articleId}")
+    public ApiResponse<ArticleResponseDTO.UpdateArticleResDTO> updateArticle(
+            @PathVariable Long articleId,
+            @RequestBody ArticleRequestDTO.UpdateArticleReqDTO request
+    ) {
+        Article updatedArticle = articleCommandService.updateArticle(articleId, request);
+        // Converter를 사용하여 DTO 변환
+        ArticleResponseDTO.UpdateArticleResDTO response = ArticleConverter.toUpdateResDTO(updatedArticle);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+
 }
 

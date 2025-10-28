@@ -33,4 +33,11 @@ public class Article extends BaseEntity {
     @Column(name = "like_num")
     @Builder.Default
     private Integer likeNum = 0;
+
+
+    //수정삭제 매서드
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
