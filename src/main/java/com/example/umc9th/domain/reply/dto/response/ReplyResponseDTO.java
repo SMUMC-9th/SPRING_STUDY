@@ -57,4 +57,20 @@ public class ReplyResponseDTO {
                 .build();
         }
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DeleteReplyResponseDTO {
+        private Long id;
+        private LocalDateTime deletedAt;
+
+        public static DeleteReplyResponseDTO of(Long id) {
+            return DeleteReplyResponseDTO.builder()
+                .id(id)
+                .deletedAt(LocalDateTime.now())
+                .build();
+        }
+    }
 }

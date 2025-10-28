@@ -57,4 +57,14 @@ public class ReplyController {
         ReplyResponseDTO.UpdateReplyResponseDTO response = replyCommandService.updateReply(replyId, dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
+
+    @DeleteMapping("/{replyId}")
+    @Operation(
+        summary = "댓글 삭제 API (Soft Delete)"
+    )
+    public ApiResponse<ReplyResponseDTO.DeleteReplyResponseDTO> deleteReply(
+        @PathVariable("replyId") Long replyId) {
+        ReplyResponseDTO.DeleteReplyResponseDTO response = replyCommandService.deleteReply(replyId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
 }

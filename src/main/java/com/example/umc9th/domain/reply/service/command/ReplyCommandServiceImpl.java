@@ -45,4 +45,14 @@ public class ReplyCommandServiceImpl implements ReplyCommandService {
 
         return ReplyResponseDTO.UpdateReplyResponseDTO.from(reply);
     }
+
+    @Override
+    public ReplyResponseDTO.DeleteReplyResponseDTO deleteReply(Long id) {
+        Reply reply = replyRepository.findById(id)
+            .orElseThrow(() -> new ReplyException(ReplyErrorCode.REPLY_NOT_FOUND));
+
+        reply.delete();
+
+        return ReplyResponseDTO.DeleteReplyResponseDTO.of(id);
+    }
 }
