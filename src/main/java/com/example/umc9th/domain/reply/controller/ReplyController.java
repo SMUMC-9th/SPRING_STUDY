@@ -1,6 +1,6 @@
 package com.example.umc9th.domain.reply.controller;
 
-import com.example.umc9th.domain.reply.dto.request.ReplyReqDTO;
+import com.example.umc9th.domain.reply.dto.request.ReplyRequest;
 import com.example.umc9th.domain.reply.dto.response.ReplyResponse;
 import com.example.umc9th.domain.reply.service.command.ReplyCommandService;
 import com.example.umc9th.domain.reply.service.query.ReplyQueryService;
@@ -27,7 +27,7 @@ public class ReplyController {
     @Operation(method="POST", summary = "댓글 작성 API", description="특정 게시글에 댓글을 작성합니다.")
     public ApiResponse<ReplyResponse.GetReplyResDTO> createReply(
             @Parameter(description ="작성할 댓글",required = true)
-            @RequestBody ReplyReqDTO replyReqDTO
+            @RequestBody ReplyRequest.ReplyReqDTO replyReqDTO
     ) {
         ReplyResponse.GetReplyResDTO reply = replyCommandService.createReply(replyReqDTO);
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED_201, reply);
@@ -41,5 +41,26 @@ public class ReplyController {
     ) {
         List<ReplyResponse.GetReplyWithArticleIdResDTO> replyList = replyQueryService.getReplyList(articleId);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, replyList);
+    }
+
+    @PutMapping("/patch/{replyId}")
+    @Operation(method = "PATCH", summary = "특정 Reply 수정 API", description = "특정 댓글을 수정합니다.")
+    public ApiResponse<ReplyResponse.GetReplyWithArticleIdResDTO> patchReply(
+            @Parameter(description = "수정할 reply id")
+            @PathVariable("replyId") Long replyId,
+            @RequestBody ReplyRequest.ReplyPatchReqDTO replyReqDTO
+    ) {
+        ReplyResponse.GetReplyWithArticleIdResDTO reply = replyCommandService.patchReply(replyId, replyReqDTO);
+        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED_201, reply);
+    }
+
+    @DeleteMapping("/delete/{replyId}")
+    @Operation(method = "DELETE", summary = "특정 Reply 삭제 API", description = "특정 댓글을 삭제합니다.")
+    public ApiResponse<Void> deleteReply(
+            @Parameter(description = "삭제할 Reply Id")
+            @PathVariable("replyId") Long replyId
+    ) {
+        replyCommandService.deleteReply(replyId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.NO_CONTENT_204, null);
     }
 }

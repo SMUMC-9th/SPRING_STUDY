@@ -1,7 +1,7 @@
 package com.example.umc9th.domain.reply.converter;
 
 import com.example.umc9th.domain.article.entity.Article;
-import com.example.umc9th.domain.reply.dto.request.ReplyReqDTO;
+import com.example.umc9th.domain.reply.dto.request.ReplyRequest;
 import com.example.umc9th.domain.reply.dto.response.ReplyResponse;
 import com.example.umc9th.domain.reply.entity.Reply;
 
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class ReplyConverter {
 
-    public static Reply toReply(ReplyReqDTO dto, Article article) {
+    public static Reply toReply(ReplyRequest.ReplyReqDTO dto, Article article) {
         return Reply.builder()
                 .article(article)
                 .content(dto.content())
