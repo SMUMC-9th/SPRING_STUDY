@@ -3,6 +3,7 @@ package com.example.umc9th.domain.reply.service.query;
 import com.example.umc9th.domain.article.exception.ArticleErrorCode;
 import com.example.umc9th.domain.article.exception.ArticleException;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
+import com.example.umc9th.domain.reply.converter.ReplyConverter;
 import com.example.umc9th.domain.reply.dto.response.ReplyResponseDTO;
 import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.domain.reply.exception.ReplyErrorCode;
@@ -20,13 +21,14 @@ import java.util.List;
 public class ReplyQueryServiceImpl implements ReplyQueryService {
 
     private final ReplyRepository replyRepository;
+    private final ReplyConverter replyConverter;
     private final ArticleRepository articleRepository;
 
     @Override
     public ReplyResponseDTO.ReplyDTO getReply(Long id) {
         Reply reply = replyRepository.findById(id)
                 .orElseThrow(() -> new ReplyException(ReplyErrorCode.REPLY_NOT_FOUND));
-        return ReplyResponseDTO.ReplyDTO.from(reply);
+        return replyConverter.toResponse(reply);
     }
 
     @Override
@@ -36,6 +38,6 @@ public class ReplyQueryServiceImpl implements ReplyQueryService {
 
         List<Reply> replies = replyRepository.findByArticleId(articleId);
 
-        return ReplyResponseDTO.ReplyDTO.fromList(replies);
+        return replyConverter.toListResponse(replies);
     }
 }

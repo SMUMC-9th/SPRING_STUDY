@@ -21,14 +21,6 @@ public class ArticleResponseDTO {
         private Long id;
         private String title;
         private LocalDateTime createdAt;
-
-        public static CreateArticleResponseDTO from(Article article) {
-            return CreateArticleResponseDTO.builder()
-                .id(article.getId())
-                .title(article.getTitle())
-                .createdAt(article.getCreatedAt())
-                .build();
-        }
     }
 
     // 게시글 단건 조회 응답 DTO
@@ -43,17 +35,6 @@ public class ArticleResponseDTO {
         private Integer likeNum;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-
-        public static GetArticleResponseDTO from(Article article) {
-            return GetArticleResponseDTO.builder()
-                .id(article.getId())
-                .title(article.getTitle())
-                .content(article.getContent())
-                .likeNum(article.getLikeNum())
-                .createdAt(article.getCreatedAt())
-                .updatedAt(article.getUpdatedAt())
-                .build();
-        }
     }
 
     // 게시글 목록 조회 응답 DTO
@@ -66,21 +47,6 @@ public class ArticleResponseDTO {
         private String title;
         private Integer likeNum;
         private LocalDateTime createdAt;
-
-        public static GetArticlesResponseDTO from(Article article) {
-            return GetArticlesResponseDTO.builder()
-                .id(article.getId())
-                .title(article.getTitle())
-                .likeNum(article.getLikeNum())
-                .createdAt(article.getCreatedAt())
-                .build();
-        }
-
-        public static List<GetArticlesResponseDTO> fromList(List<Article> articles) {
-            return articles.stream()
-                .map(GetArticlesResponseDTO::from)
-                .collect(Collectors.toList());
-        }
     }
 
     @Getter
@@ -92,15 +58,6 @@ public class ArticleResponseDTO {
         private String title;
         private String content;
         private LocalDateTime updatedAt;
-
-        public static UpdateArticleResponseDTO from(Article article) {
-            return UpdateArticleResponseDTO.builder()
-                .id(article.getId())
-                .title(article.getTitle())
-                .content(article.getContent())
-                .updatedAt(article.getUpdatedAt())
-                .build();
-        }
     }
 
     @Getter
@@ -110,12 +67,5 @@ public class ArticleResponseDTO {
     public static class DeleteArticleResponseDTO {
         private Long id;
         private LocalDateTime deletedAt;
-
-        public static DeleteArticleResponseDTO of(Long id) {
-            return DeleteArticleResponseDTO.builder()
-                .id(id)
-                .deletedAt(LocalDateTime.now())
-                .build();
-        }
     }
 }

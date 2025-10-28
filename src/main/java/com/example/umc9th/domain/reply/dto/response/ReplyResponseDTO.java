@@ -22,22 +22,6 @@ public class ReplyResponseDTO {
         private Long articleId;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-
-        public static ReplyDTO from(Reply reply) {
-            return ReplyDTO.builder()
-                .id(reply.getId())
-                .content(reply.getContent())
-                .articleId(reply.getArticle().getId())
-                .createdAt(reply.getCreatedAt())
-                .updatedAt(reply.getUpdatedAt())
-                .build();
-        }
-
-        public static List<ReplyDTO> fromList(List<Reply> replies) {
-            return replies.stream()
-                .map(ReplyDTO::from)
-                .collect(Collectors.toList());
-        }
     }
 
     @Getter
@@ -48,14 +32,6 @@ public class ReplyResponseDTO {
         private Long id;
         private String content;
         private LocalDateTime updatedAt;
-
-        public static UpdateReplyResponseDTO from(Reply reply) {
-            return UpdateReplyResponseDTO.builder()
-                .id(reply.getId())
-                .content(reply.getContent())
-                .updatedAt(reply.getUpdatedAt())
-                .build();
-        }
     }
 
     @Getter
@@ -65,12 +41,5 @@ public class ReplyResponseDTO {
     public static class DeleteReplyResponseDTO {
         private Long id;
         private LocalDateTime deletedAt;
-
-        public static DeleteReplyResponseDTO of(Long id) {
-            return DeleteReplyResponseDTO.builder()
-                .id(id)
-                .deletedAt(LocalDateTime.now())
-                .build();
-        }
     }
 }

@@ -33,7 +33,7 @@ public class ReplyCommandServiceImpl implements ReplyCommandService {
 
         Reply savedReply = replyRepository.save(reply);
         
-        return ReplyResponseDTO.ReplyDTO.from(savedReply);
+        return replyConverter.toResponse(savedReply);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ReplyCommandServiceImpl implements ReplyCommandService {
 
         reply.update(dto.getContent());
 
-        return ReplyResponseDTO.UpdateReplyResponseDTO.from(reply);
+        return replyConverter.toUpdateResponse(reply);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class ReplyCommandServiceImpl implements ReplyCommandService {
 
         reply.delete();
 
-        return ReplyResponseDTO.DeleteReplyResponseDTO.of(id);
+        return replyConverter.toDeleteResponse(reply);
     }
 }

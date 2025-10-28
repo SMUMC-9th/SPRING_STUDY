@@ -23,7 +23,7 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
     public ArticleResponseDTO.CreateArticleResponseDTO createArticle(ArticleRequestDTO.CreateArticleDTO dto) {
         Article article = articleConverter.toEntity(dto);
         Article savedArticle = articleRepository.save(article);
-        return ArticleResponseDTO.CreateArticleResponseDTO.from(savedArticle);
+        return articleConverter.toCreateResponse(savedArticle);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
 
         article.updateAll(dto.getTitle(), dto.getContent());
 
-        return ArticleResponseDTO.UpdateArticleResponseDTO.from(article);
+        return articleConverter.toUpdateResponse(article);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
             article.updateContent(dto.getContent());
         }
 
-        return ArticleResponseDTO.UpdateArticleResponseDTO.from(article);
+        return articleConverter.toUpdateResponse(article);
     }
 
     @Override
@@ -58,6 +58,6 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
 
         article.delete();
 
-        return ArticleResponseDTO.DeleteArticleResponseDTO.of(id);
+        return articleConverter.toDeleteResponse(article);
     }
 }
