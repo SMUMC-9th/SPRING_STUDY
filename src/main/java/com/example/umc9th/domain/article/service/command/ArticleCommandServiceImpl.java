@@ -27,4 +27,14 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
                         .build()
         );
     }
+
+    @Override
+    public Article updateArticle(Long articleId, ArticleRequestDTO.UpdateArticleDTO dto) {
+        // 게시글 조회 (없으면 예외 발생)
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        article.update(dto.getTitle(), dto.getContent());
+        return article;
+    }
+
 }
