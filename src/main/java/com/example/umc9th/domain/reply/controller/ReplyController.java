@@ -5,6 +5,7 @@ import com.example.umc9th.domain.reply.dto.ReplyResponseDTO;
 import com.example.umc9th.domain.reply.service.ReplyService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,4 +45,23 @@ public class ReplyController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
 
+    //전체 수정
+    @PutMapping("/replies/{id}")
+    public ApiResponse<ReplyResponseDTO.ReplyDTO> put(
+            @PathVariable Long id,
+            @Valid @RequestBody ReplyRequestDTO.PutDTO dto
+    ) {
+        ReplyResponseDTO.ReplyDTO response = replyService.putReply(id, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+    //부분 수정
+    @PatchMapping("/replies/{id}")
+    public ApiResponse<ReplyResponseDTO.ReplyDTO> patch(
+            @PathVariable Long id,
+            @Valid @RequestBody ReplyRequestDTO.PatchDTO dto
+    ) {
+        ReplyResponseDTO.ReplyDTO response = replyService.patchReply(id, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
 }

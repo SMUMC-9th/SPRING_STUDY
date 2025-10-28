@@ -4,10 +4,6 @@ import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reply")
@@ -27,5 +23,15 @@ public class Reply extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
     private Article article;
+
+    public void update(String content) {
+        this.content = content;
+    }
+
+    public void patch(String content) {
+        if (content != null) {
+            this.content = content;
+        }
+    }
 }
 
