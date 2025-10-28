@@ -25,8 +25,8 @@ public class ArticleController {
     @Operation(
         summary = "게시글 생성 API"
     )
-    public ApiResponse<ArticleResponseDTO.ArticleDTO> createArticle(@RequestBody ArticleRequestDTO.CreateArticleDTO dto) {
-        ArticleResponseDTO.ArticleDTO response = articleCommandService.createArticle(dto);
+    public ApiResponse<ArticleResponseDTO.CreateArticleResponseDTO> createArticle(@RequestBody ArticleRequestDTO.CreateArticleDTO dto) {
+        ArticleResponseDTO.CreateArticleResponseDTO response = articleCommandService.createArticle(dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, response);
     }
 
@@ -34,8 +34,8 @@ public class ArticleController {
     @Operation(
         summary = "게시글 하나 조회 조회 API"
     )
-    public ApiResponse<ArticleResponseDTO.ArticleDTO> getArticle(@PathVariable("articleId") Long articleId) {
-        ArticleResponseDTO.ArticleDTO response = articleQueryService.getArticle(articleId);
+    public ApiResponse<ArticleResponseDTO.GetArticleResponseDTO> getArticle(@PathVariable("articleId") Long articleId) {
+        ArticleResponseDTO.GetArticleResponseDTO response = articleQueryService.getArticle(articleId);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
 
@@ -43,8 +43,8 @@ public class ArticleController {
     @Operation(
         summary = "게시글 전체 조회 API"
     )
-    public ApiResponse<List<ArticleResponseDTO.ArticleDTO>> getArticles() {
-        List<ArticleResponseDTO.ArticleDTO> response = articleQueryService.getArticles();
+    public ApiResponse<List<ArticleResponseDTO.GetArticlesResponseDTO>> getArticles() {
+        List<ArticleResponseDTO.GetArticlesResponseDTO> response = articleQueryService.getArticles();
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
 }

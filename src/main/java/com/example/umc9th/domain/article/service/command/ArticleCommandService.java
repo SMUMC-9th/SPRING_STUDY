@@ -4,5 +4,5 @@ import com.example.umc9th.domain.article.dto.request.ArticleRequestDTO;
 import com.example.umc9th.domain.article.dto.response.ArticleResponseDTO;
 
 public interface ArticleCommandService {
-    ArticleResponseDTO.ArticleDTO createArticle(ArticleRequestDTO.CreateArticleDTO dto);
+    ArticleResponseDTO.CreateArticleResponseDTO createArticle(ArticleRequestDTO.CreateArticleDTO dto);
 }
