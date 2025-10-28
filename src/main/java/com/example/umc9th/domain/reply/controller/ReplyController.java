@@ -8,20 +8,22 @@ import com.example.umc9th.domain.reply.service.command.ReplyCommandService;
 import com.example.umc9th.domain.reply.service.query.ReplyQueryService;
 import com.example.umc9th.global.apiPaylode.ApiResponse;
 import com.example.umc9th.global.exception.GeneralSuccessCode;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name = "Reply", description = "댓글 관련 API")
 @RestController
 @RequiredArgsConstructor
-
 public class ReplyController {
 
     private final ReplyCommandService replyCommandService;
     private final ReplyConverter replyConverter;
     private final ReplyQueryService replyQueryService;
 
+    @Operation(summary = "댓글 생성", description = "게시글에 댓글을 작성합니다.")
     @PostMapping("/replies")
     public ApiResponse<ReplyResponseDTO.ReplyResDTO> createReply(
             @RequestBody ReplyRequestDTO.CreateReplyDTO dto) {
@@ -29,6 +31,7 @@ public class ReplyController {
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, replyConverter.toDTO(reply));
     }
 
+    @Operation(summary = "단일 댓글 조회", description = "댓글 ID로 단일 댓글을 조회합니다.")
     @GetMapping("/{replyId}")
     public ApiResponse<ReplyResponseDTO.ReplyResDTO> getReply(@PathVariable Long replyId) {
         Reply reply = replyQueryService.getReply(replyId);
@@ -37,6 +40,8 @@ public class ReplyController {
                 replyConverter.toDTO(reply)
         );
     }
+
+    @Operation(summary = "게시글 댓글 전체 조회", description = "특정 게시글의 댓글 전체를 조회합니다.")
     @GetMapping("/article/{articleId}")
     public ApiResponse<List<ReplyResponseDTO.ReplyResDTO>> getRepliesByArticle(@PathVariable Long articleId) {
         List<Reply> replies = replyQueryService.getRepliesByArticle(articleId);
@@ -52,6 +57,7 @@ public class ReplyController {
     }
 
 
+    @Operation(summary = "댓글 수정", description = "댓글 ID로 댓글 내용을 수정합니다.")
     @PatchMapping("/replies/{replyId}")
     public ApiResponse<ReplyResponseDTO.ReplyResDTO> updateReply(
             @PathVariable Long replyId,
@@ -60,6 +66,7 @@ public class ReplyController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, replyConverter.toDTO(reply));
     }
 
+    @Operation(summary = "댓글 삭제", description = "댓글 ID로 댓글을 삭제합니다.")
     @DeleteMapping("/replies/{replyId}")
     public ApiResponse<Void> deleteReply(@PathVariable Long replyId) {
         replyCommandService.deleteReply(replyId);
