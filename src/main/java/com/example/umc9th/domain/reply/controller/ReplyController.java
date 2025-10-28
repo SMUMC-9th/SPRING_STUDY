@@ -38,4 +38,9 @@ public class ReplyController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, reply);
     }
 
+    @DeleteMapping("articles/{articleId}/reply/{replyId}")
+    public ApiResponse<Long> deleteReply(@PathVariable("replyId") Long replyId){
+        replyCommandService.deleteReply(replyId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, replyId);
+    }
 }

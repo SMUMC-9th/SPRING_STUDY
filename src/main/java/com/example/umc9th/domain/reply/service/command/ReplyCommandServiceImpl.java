@@ -6,6 +6,8 @@ import com.example.umc9th.domain.article.service.query.ArticleQueryService;
 import com.example.umc9th.domain.reply.dto.request.ReplyRequestDTO;
 import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.domain.reply.repository.ReplyRepository;
+import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
+import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,4 +45,9 @@ public class ReplyCommandServiceImpl implements ReplyCommandService{
         return reply;
     }
 
+    @Override
+    public void deleteReply(Long replyId) {
+        Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        replyRepository.delete(reply);
+    }
 }
