@@ -4,7 +4,9 @@ import com.example.umc9th.domain.article.converter.ArticleConverter;
 import com.example.umc9th.domain.article.dto.request.ArticleReqDTO;
 import com.example.umc9th.domain.article.dto.response.ArticleResponse;
 import com.example.umc9th.domain.article.entity.Article;
+import com.example.umc9th.domain.article.exception.ArticleErrorCode;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
+import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,5 +26,31 @@ public class ArticleCommandServiceImpl implements ArticleCommandService {
         Article saved = articleRepository.save(article);
 
         return ArticleConverter.toGetArticleWithReplyResDTO(saved);
+    }
+
+    @Override
+    public ArticleResponse.GetArticleWithReplyResDTO updateArticle(Long articleId, ArticleReqDTO dto) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));
+
+        article.updateArticle(dto.title(), dto.content());
+        return ArticleConverter.toGetArticleWithReplyResDTO(article);
+    }
+
+    @Override
+    public ArticleResponse.GetArticleWithReplyResDTO patchArticle(Long articleId, ArticleReqDTO dto) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));    
+        
+        article.updateArticle(dto.title(), dto.content());
+        
+        return ArticleConverter.toGetArticleWithReplyResDTO(article);
+    }
+
+    @Override
+    public void deleteArticle(Long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));
+        articleRepository.delete(article);
     }
 }
