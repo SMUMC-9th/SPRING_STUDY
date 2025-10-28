@@ -1,6 +1,6 @@
 package com.example.umc9th.domain.reply.service.query;
 
-import com.example.umc9th.domain.reply.dto.response.GetReplyWithArticleIdResDTO;
+import com.example.umc9th.domain.reply.dto.response.ReplyResponse;
 import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.domain.reply.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class ReplyQueryServiceImpl implements ReplyQueryService {
     private final ReplyRepository replyRepository;
 
     @Override
-    public List<GetReplyWithArticleIdResDTO> getReplyList(Long articleId) {
+    public List<ReplyResponse.GetReplyWithArticleIdResDTO> getReplyList(Long articleId) {
         List<Reply> replyList = replyRepository.findByArticleId(articleId);
 
         return toGetReplyWithArticleIdResDTO(replyList);

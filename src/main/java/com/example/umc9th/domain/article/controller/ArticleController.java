@@ -1,8 +1,7 @@
 package com.example.umc9th.domain.article.controller;
 
 import com.example.umc9th.domain.article.dto.request.ArticleReqDTO;
-import com.example.umc9th.domain.article.dto.response.GetArticleResDTO;
-import com.example.umc9th.domain.article.dto.response.GetArticleWithReplyResDTO;
+import com.example.umc9th.domain.article.dto.response.ArticleResponse;
 import com.example.umc9th.domain.article.service.command.ArticleCommandService;
 import com.example.umc9th.domain.article.service.query.ArticleQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -26,25 +25,25 @@ public class ArticleController {
 
     @PostMapping("")
     @Operation(method = "POST", summary = "Article 작성 API", description = "Article을 작성합니다.")
-    public ApiResponse<GetArticleWithReplyResDTO> createArticle(@RequestBody ArticleReqDTO dto) {
-        GetArticleWithReplyResDTO article = articleCommandService.createArticle(dto);
+    public ApiResponse<ArticleResponse.GetArticleWithReplyResDTO> createArticle(@RequestBody ArticleReqDTO dto) {
+        ArticleResponse.GetArticleWithReplyResDTO article = articleCommandService.createArticle(dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED_201, article);
     }
 
     @GetMapping("/{articleId}")
     @Operation(method = "GET", summary = "특정 Article 조회 API", description = "특정 Article을 조회합니다.")
-    public ApiResponse<GetArticleWithReplyResDTO> getArticle(
+    public ApiResponse<ArticleResponse.GetArticleWithReplyResDTO> getArticle(
             @Parameter(description = "조회할 Article Id")
             @PathVariable("articleId") Long articleId
     ) {
-        GetArticleWithReplyResDTO article = articleQueryService.getArticle(articleId);
+        ArticleResponse.GetArticleWithReplyResDTO article = articleQueryService.getArticle(articleId);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, article);
     }
 
     @GetMapping("")
     @Operation(method = "GET", summary = "Article 전체 조회 API", description = "모든 Article을 조회합니다.")
-    public ApiResponse<List<GetArticleResDTO>> getArticleList() {
-        List<GetArticleResDTO> articles = articleQueryService.getArticlesList();
+    public ApiResponse<List<ArticleResponse.GetArticleResDTO>> getArticleList() {
+        List<ArticleResponse.GetArticleResDTO> articles = articleQueryService.getArticlesList();
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, articles);
     }
 }

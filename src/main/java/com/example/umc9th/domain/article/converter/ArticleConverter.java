@@ -1,26 +1,29 @@
 package com.example.umc9th.domain.article.converter;
 
-import com.example.umc9th.domain.article.dto.response.GetArticleResDTO;
-import com.example.umc9th.domain.article.dto.response.GetArticleWithReplyResDTO;
+import com.example.umc9th.domain.article.dto.request.ArticleReqDTO;
+import com.example.umc9th.domain.article.dto.response.ArticleResponse;
 import com.example.umc9th.domain.article.entity.Article;
-import com.example.umc9th.domain.reply.dto.response.GetReplyResDTO;
+import com.example.umc9th.domain.reply.converter.ReplyConverter;
+import com.example.umc9th.domain.reply.dto.response.ReplyResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ArticleConverter {
 
-    public static GetArticleWithReplyResDTO toGetArticleResDTO(Article article) {
-        List<GetReplyResDTO> replyList = article.getReplyList().stream()
-                .map(reply -> new GetReplyResDTO(
-                        reply.getId(),
-                        reply.getContent(),
-                        reply.getCreatedAt(),
-                        reply.getUpdatedAt()
-                ))
+    public static Article toArticle(ArticleReqDTO dto) {
+        return Article.builder()
+                .title(dto.title())
+                .content(dto.content())
+                .build();
+    }
+
+    public static ArticleResponse.GetArticleWithReplyResDTO toGetArticleWithReplyResDTO(Article article) {
+        List<ReplyResponse.GetReplyResDTO> replyList = article.getReplyList().stream()
+                .map(ReplyConverter::toGetReplyResDTO)
                 .collect(Collectors.toList());
 
-        return new GetArticleWithReplyResDTO(
+        return new ArticleResponse.GetArticleWithReplyResDTO(
                 article.getId(),
                 article.getTitle(),
                 article.getContent(),
@@ -31,18 +34,22 @@ public class ArticleConverter {
         );
     }
 
-    public static List<GetArticleResDTO> toGetArticleResDTO(
+    public static ArticleResponse.GetArticleResDTO toGetArticleResDTO(Article article) {
+        return new ArticleResponse.GetArticleResDTO(
+                article.getId(),
+                article.getTitle(),
+                article.getContent(),
+                article.getCreatedAt(),
+                article.getUpdatedAt(),
+                article.getLikeNum()
+        );
+    }
+
+    public static List<ArticleResponse.GetArticleResDTO> toGetArticleResDTO(
             List<Article> articles
     ) {
         return articles.stream()
-                .map(article -> new GetArticleResDTO(
-                        article.getId(),
-                        article.getTitle(),
-                        article.getContent(),
-                        article.getCreatedAt(),
-                        article.getUpdatedAt(),
-                        article.getLikeNum()
-                ))
+                .map(ArticleConverter::toGetArticleResDTO)
                 .collect(Collectors.toList());
     }
 }

@@ -1,7 +1,7 @@
 package com.example.umc9th.domain.article.service.query;
 
-import com.example.umc9th.domain.article.dto.response.GetArticleResDTO;
-import com.example.umc9th.domain.article.dto.response.GetArticleWithReplyResDTO;
+import com.example.umc9th.domain.article.converter.ArticleConverter;
+import com.example.umc9th.domain.article.dto.response.ArticleResponse;
 import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.exception.ArticleErrorCode;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.example.umc9th.domain.article.converter.ArticleConverter.toGetArticleResDTO;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -22,15 +20,15 @@ public class ArticleQueryServiceImpl implements ArticleQueryService {
     private final ArticleRepository articleRepository;
 
     @Override
-    public GetArticleWithReplyResDTO getArticle(Long id) {
+    public ArticleResponse.GetArticleWithReplyResDTO getArticle(Long id) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));
-        return toGetArticleResDTO(article);
+        return ArticleConverter.toGetArticleWithReplyResDTO(article);
     }
 
     @Override
-    public List<GetArticleResDTO> getArticlesList() {
+    public List<ArticleResponse.GetArticleResDTO> getArticlesList() {
         List<Article> articleList = articleRepository.findAll();
-        return toGetArticleResDTO(articleList);
+        return ArticleConverter.toGetArticleResDTO(articleList);
     }
 }

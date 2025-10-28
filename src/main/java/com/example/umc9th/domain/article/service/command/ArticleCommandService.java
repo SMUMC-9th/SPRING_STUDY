@@ -1,8 +1,8 @@
 package com.example.umc9th.domain.article.service.command;
 
 import com.example.umc9th.domain.article.dto.request.ArticleReqDTO;
-import com.example.umc9th.domain.article.dto.response.GetArticleWithReplyResDTO;
+import com.example.umc9th.domain.article.dto.response.ArticleResponse;
 
 public interface ArticleCommandService {
-    GetArticleWithReplyResDTO createArticle(ArticleReqDTO dto);
+    ArticleResponse.GetArticleWithReplyResDTO createArticle(ArticleReqDTO dto);
 }
