@@ -34,4 +34,21 @@ public class Article extends BaseEntity {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     @Builder.Default
     private List<Reply> replyList = new ArrayList<>();
+
+    public void updateAll(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public void updateTitle(String title) {
+        if (title != null && !title.isBlank()) {
+            this.title = title;
+        }
+    }
+
+    public void updateContent(String content) {
+        if (content != null && !content.isBlank()) {
+            this.content = content;
+        }
+    }
 }

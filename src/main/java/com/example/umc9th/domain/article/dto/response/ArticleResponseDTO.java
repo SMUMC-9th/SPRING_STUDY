@@ -82,4 +82,24 @@ public class ArticleResponseDTO {
                 .collect(Collectors.toList());
         }
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateArticleResponseDTO {
+        private Long id;
+        private String title;
+        private String content;
+        private LocalDateTime updatedAt;
+
+        public static UpdateArticleResponseDTO from(Article article) {
+            return UpdateArticleResponseDTO.builder()
+                .id(article.getId())
+                .title(article.getTitle())
+                .content(article.getContent())
+                .updatedAt(article.getUpdatedAt())
+                .build();
+        }
+    }
 }
