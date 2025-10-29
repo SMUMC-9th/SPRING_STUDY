@@ -33,16 +33,24 @@ public class ArticleCommandServiceImpl implements ArticleCommandService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));
 
-        article.updateArticle(dto.title(), dto.content());
+        article.updateTitle(dto.title());
+        article.updateContent(dto.content());
+
         return ArticleConverter.toGetArticleWithReplyResDTO(article);
     }
 
     @Override
     public ArticleResponse.GetArticleWithReplyResDTO patchArticle(Long articleId, ArticleReqDTO dto) {
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));    
-        
-        article.updateArticle(dto.title(), dto.content());
+                .orElseThrow(()-> new GeneralException(ArticleErrorCode.ARTICLE_NOT_FOUND));
+
+        if(dto.title() != null && !dto.title().isBlank()) {
+            article.updateTitle(dto.title());
+        }
+
+        if(dto.content() != null && !dto.content().isBlank()) {
+            article.updateContent(dto.content());
+        }
         
         return ArticleConverter.toGetArticleWithReplyResDTO(article);
     }
