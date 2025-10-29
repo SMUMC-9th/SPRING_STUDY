@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access =  AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @SQLDelete(sql = "UPDATE article SET deleted_at = NOW() WHERE id = ?")
 @SQLRestriction("deleted_at IS NULL")
 public class Article extends BaseEntity {
@@ -45,14 +45,10 @@ public class Article extends BaseEntity {
     }
 
     public void updateTitle(String title) {
-        if (title != null && !title.isBlank()) {
-            this.title = title;
-        }
+        this.title = title;
     }
 
     public void updateContent(String content) {
-        if (content != null && !content.isBlank()) {
-            this.content = content;
-        }
+        this.content = content;
     }
 }

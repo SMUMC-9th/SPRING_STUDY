@@ -29,8 +29,6 @@ public class Reply extends BaseEntity {
     private Article article;
 
     public void update(String content) {
-        if (content != null && !content.isBlank()) {
-            this.content = content;
-        }
+        this.content = content;
     }
 }

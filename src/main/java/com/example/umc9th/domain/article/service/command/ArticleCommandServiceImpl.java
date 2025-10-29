@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ArticleCommandServiceImpl implements ArticleCommandService{
+public class ArticleCommandServiceImpl implements ArticleCommandService {
 
     private final ArticleRepository articleRepository;
     private final ArticleConverter articleConverter;
@@ -31,7 +31,9 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
         Article article = articleRepository.findById(id)
             .orElseThrow(() -> new ArticleException(ArticleErrorCode.ARTICLE_NOT_FOUND));
 
-        article.updateAll(dto.getTitle(), dto.getContent());
+        if (dto.getTitle() != null && !dto.getTitle().isEmpty() && dto.getContent() != null && !dto.getContent().isEmpty()) {
+            article.updateAll(dto.getTitle(), dto.getContent());
+        }
 
         return articleConverter.toUpdateResponse(article);
     }
@@ -41,10 +43,10 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
         Article article = articleRepository.findById(id)
             .orElseThrow(() -> new ArticleException(ArticleErrorCode.ARTICLE_NOT_FOUND));
 
-        if (dto.getTitle() != null) {
+        if (dto.getTitle() != null && !dto.getTitle().isBlank()) {
             article.updateTitle(dto.getTitle());
         }
-        if (dto.getContent() != null) {
+        if (dto.getContent() != null && !dto.getContent().isBlank()) {
             article.updateContent(dto.getContent());
         }
 

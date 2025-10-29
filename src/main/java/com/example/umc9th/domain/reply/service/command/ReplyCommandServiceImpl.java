@@ -41,7 +41,9 @@ public class ReplyCommandServiceImpl implements ReplyCommandService {
         Reply reply = replyRepository.findById(id)
             .orElseThrow(() -> new ReplyException(ReplyErrorCode.REPLY_NOT_FOUND));
 
-        reply.update(dto.getContent());
+        if (dto.getContent() != null && !dto.getContent().isBlank()) {
+            reply.update(dto.getContent());
+        }
 
         return replyConverter.toUpdateResponse(reply);
     }
