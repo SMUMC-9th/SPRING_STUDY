@@ -69,7 +69,9 @@ public class ArticleService {
     ) {
         Article article = articleRepository.findById(id).orElseThrow(() ->
                 new GeneralException(GeneralErrorCode.NOT_FOUND_404));
-        article.patch(dto.content());
+        if (dto.content() != null) {
+            article.patch(dto.content());
+        }
         return ArticleConverter.toArticleDTO(article);
 
     }

@@ -29,9 +29,7 @@ public class Reply extends BaseEntity {
     }
 
     public void patch(String content) {
-        if (content != null) {
-            this.content = content;
-        }
+        this.content = content;
     }
 }
 

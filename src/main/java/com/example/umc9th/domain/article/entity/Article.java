@@ -37,8 +37,6 @@ public class Article extends BaseEntity {
     }
 
     public void patch(String content) {
-        if (content != null) {
-            this.content = content;
-        }
+        this.content = content;
     }
 }

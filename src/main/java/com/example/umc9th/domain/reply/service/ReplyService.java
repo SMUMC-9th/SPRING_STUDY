@@ -77,7 +77,9 @@ public class ReplyService {
     ) {
         Reply reply = replyRepository.findById(id).orElseThrow(() ->
                 new GeneralException(GeneralErrorCode.NOT_FOUND_404));
-        reply.patch(dto.content());
+        if(dto.content() != null){
+            reply.patch(dto.content());
+        }
         return ReplyConverter.toReplyDTO(reply);
 
     }
