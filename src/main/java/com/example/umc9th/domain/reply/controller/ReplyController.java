@@ -51,10 +51,7 @@ public class ReplyController {
         // 성공 코드 생성
         ReplySuccessCode code = ReplySuccessCode.FOUND;
 
-        // DTO 포장
-        ReplyResponseDTO.GetReply result = ReplyConverter.toGetReply(reply);
-
-        return ApiResponse.onSuccess(code, result);
+        return ApiResponse.onSuccess(code, ReplyConverter.toGetReply(reply));
     }
 
     // 전체 댓글 조회
@@ -69,9 +66,27 @@ public class ReplyController {
         // 성공 코드 생성
         ReplySuccessCode code = ReplySuccessCode.FOUND;
 
-        // DTO 포장
-        ReplyResponseDTO.GetReplies result = ReplyConverter.toGetReplies(replies);
+        return ApiResponse.onSuccess(code, ReplyConverter.toGetReplies(replies));
+    }
 
-        return ApiResponse.onSuccess(code, result);
+    // 댓글 수정
+    @PutMapping("/replies/{replyId}")
+    public ApiResponse<ReplyResponseDTO.UpdateReply> updateReply(
+            @PathVariable("replyId") Long replyId,
+            @RequestBody ReplyRequestDTO.UpdateReply dto
+    ){
+
+        ReplySuccessCode code = ReplySuccessCode.PUT_SUCCESS;
+        return ApiResponse.onSuccess(code, replyCommandService.updateReply(replyId, dto));
+
+    }
+
+    // 댓글 삭제
+    @DeleteMapping("/replies/{replyId}")
+    public ApiResponse<ReplyResponseDTO.DeleteReply> deleteReply(
+            @PathVariable("replyId") Long replyId
+    ){
+        ReplySuccessCode code = ReplySuccessCode.DELETE;
+        return ApiResponse.onSuccess(code, replyCommandService.deleteReply(replyId));
     }
 }
