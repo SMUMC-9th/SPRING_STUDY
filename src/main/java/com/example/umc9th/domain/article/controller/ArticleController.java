@@ -46,4 +46,36 @@ public class ArticleController {
         List<ArticleResponse.GetArticleResDTO> articles = articleQueryService.getArticlesList();
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, articles);
     }
+
+    @PutMapping("/update/{article_id}")
+    @Operation(method = "PUT", summary = "특정 Article 전체 수정 API", description = "특정 Article을 전체 수정합니다.")
+    public ApiResponse<ArticleResponse.GetArticleWithReplyResDTO> updateArticle(
+            @Parameter(description = "수정할 Article Id")
+            @PathVariable("article_id") Long articleId,
+            @RequestBody ArticleReqDTO dto
+    ) {
+        ArticleResponse.GetArticleWithReplyResDTO article = articleCommandService.updateArticle(articleId, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, article);
+    }
+
+    @PatchMapping("/patch/{articleId}")
+    @Operation(method = "PATCH", summary = "특정 Article 수정 API", description = "특정 Article을 수정합니다.")
+    public ApiResponse<ArticleResponse.GetArticleWithReplyResDTO> patchArticle(
+            @Parameter(description = "수정할 Article Id")
+            @PathVariable("articleId") Long articleId,
+            @RequestBody ArticleReqDTO dto
+    ) {
+        ArticleResponse.GetArticleWithReplyResDTO article = articleCommandService.patchArticle(articleId, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, article);
+    }
+
+    @DeleteMapping("/delete/{articleId}")
+    @Operation(method = "DELETE", summary = "특정 Article 삭제 API", description = "특정 Article을 삭제합니다.")
+    public ApiResponse<Void> deleteArticle(
+            @Parameter(description = "삭제할 Article Id")
+            @PathVariable("articleId") Long articleId
+    ){
+        articleCommandService.deleteArticle(articleId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.NO_CONTENT_204, null);
+    }
 }
