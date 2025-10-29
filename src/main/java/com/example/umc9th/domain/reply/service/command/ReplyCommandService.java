@@ -5,4 +5,6 @@ import com.example.umc9th.domain.reply.dto.response.ReplyResponseDTO;
 
 public interface ReplyCommandService {
     ReplyResponseDTO.ReplyDTO createReply(ReplyRequestDTO.CreateReplyDTO dto);
+    ReplyResponseDTO.UpdateReplyResponseDTO updateReply(Long id, ReplyRequestDTO.UpdateReplyDTO dto);
+    ReplyResponseDTO.DeleteReplyResponseDTO deleteReply(Long id);
 }

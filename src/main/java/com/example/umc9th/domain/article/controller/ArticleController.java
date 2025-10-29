@@ -2,7 +2,6 @@ package com.example.umc9th.domain.article.controller;
 
 import com.example.umc9th.domain.article.dto.request.ArticleRequestDTO;
 import com.example.umc9th.domain.article.dto.response.ArticleResponseDTO;
-import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.service.command.ArticleCommandService;
 import com.example.umc9th.domain.article.service.query.ArticleQueryService;
 import com.example.umc9th.global.apipayload.ApiResponse;
@@ -45,6 +44,38 @@ public class ArticleController {
     )
     public ApiResponse<List<ArticleResponseDTO.GetArticlesResponseDTO>> getArticles() {
         List<ArticleResponseDTO.GetArticlesResponseDTO> response = articleQueryService.getArticles();
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+    @PutMapping("/{articleId}")
+    @Operation(
+        summary = "게시글 전체 수정 API (PUT) - title과 content 모두 필수"
+    )
+    public ApiResponse<ArticleResponseDTO.UpdateArticleResponseDTO> updateArticle(
+        @PathVariable("articleId") Long articleId,
+        @RequestBody ArticleRequestDTO.UpdateArticleDTO dto) {
+        ArticleResponseDTO.UpdateArticleResponseDTO response = articleCommandService.updateArticle(articleId, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+    @PatchMapping("/{articleId}")
+    @Operation(
+        summary = "게시글 부분 수정 API (PATCH) - title 또는 content 선택"
+    )
+    public ApiResponse<ArticleResponseDTO.UpdateArticleResponseDTO> patchArticle(
+        @PathVariable("articleId") Long articleId,
+        @RequestBody ArticleRequestDTO.PatchArticleDTO dto) {
+        ArticleResponseDTO.UpdateArticleResponseDTO response = articleCommandService.patchArticle(articleId, dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+    @DeleteMapping("/{articleId}")
+    @Operation(
+        summary = "게시글 삭제 API (Soft Delete)"
+    )
+    public ApiResponse<ArticleResponseDTO.DeleteArticleResponseDTO> deleteArticle(
+        @PathVariable("articleId") Long articleId) {
+        ArticleResponseDTO.DeleteArticleResponseDTO response = articleCommandService.deleteArticle(articleId);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
 }

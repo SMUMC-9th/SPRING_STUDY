@@ -9,4 +9,16 @@ public class ArticleRequestDTO {
         private String title;
         private String content;
     }
+
+    @Getter
+    public static class UpdateArticleDTO {
+        private String title;
+        private String content;
+    }
+
+    @Getter
+    public static class PatchArticleDTO {
+        private String title;
+        private String content;
+    }
 }
