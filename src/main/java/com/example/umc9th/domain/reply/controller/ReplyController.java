@@ -12,8 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Tag(name="REPLY API")
 @RestController
 @RequiredArgsConstructor
@@ -35,11 +33,13 @@ public class ReplyController {
 
     @GetMapping("/{articleId}")
     @Operation(method = "GET", summary = "댓글 목록 조회 API", description = "특정 게시글의 댓글 목록을 조회합니다.")
-    public ApiResponse<List<ReplyResponse.GetReplyWithArticleIdResDTO>> getReplyList(
+    public ApiResponse<ReplyResponse.ReplyListWithPageDTO> getReplyList(
             @Parameter(description = "댓글 목록을 조회할 게시글 Id", required = true)
-            @PathVariable("articleId") Long articleId
+            @PathVariable("articleId") Long articleId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
-        List<ReplyResponse.GetReplyWithArticleIdResDTO> replyList = replyQueryService.getReplyList(articleId);
+        ReplyResponse.ReplyListWithPageDTO replyList = replyQueryService.getReplyList(articleId, page, size);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, replyList);
     }
 

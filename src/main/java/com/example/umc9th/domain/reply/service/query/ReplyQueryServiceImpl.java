@@ -4,12 +4,13 @@ import com.example.umc9th.domain.reply.dto.response.ReplyResponse;
 import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.domain.reply.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static com.example.umc9th.domain.reply.converter.ReplyConverter.toGetReplyWithArticleIdResDTO;
+import static com.example.umc9th.domain.reply.converter.ReplyConverter.toGetReplyWithPageResDTO;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,9 +20,11 @@ public class ReplyQueryServiceImpl implements ReplyQueryService {
     private final ReplyRepository replyRepository;
 
     @Override
-    public List<ReplyResponse.GetReplyWithArticleIdResDTO> getReplyList(Long articleId) {
-        List<Reply> replyList = replyRepository.findByArticleId(articleId);
+    public ReplyResponse.ReplyListWithPageDTO getReplyList(Long articleId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        return toGetReplyWithArticleIdResDTO(replyList);
+        Page<Reply> replyPage = replyRepository.findByArticleIdOrderByCreatedAtDesc(articleId, pageable);
+
+        return toGetReplyWithPageResDTO(replyPage);
     }
 }
