@@ -15,5 +15,5 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     boolean existsByArticleId(Long articleId);
 
-    Page<Reply> findByArticleIdOrderByCreatedAtDesc(Long articleId, Pageable pageable);
+    Page<Reply> findByArticleIdOrderByCreatedAtDescIdDesc(Long articleId, Pageable pageable);
 }

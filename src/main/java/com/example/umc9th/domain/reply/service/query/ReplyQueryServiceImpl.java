@@ -23,7 +23,7 @@ public class ReplyQueryServiceImpl implements ReplyQueryService {
     public ReplyResponse.ReplyListWithPageDTO getReplyList(Long articleId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Reply> replyPage = replyRepository.findByArticleIdOrderByCreatedAtDesc(articleId, pageable);
+        Page<Reply> replyPage = replyRepository.findByArticleIdOrderByCreatedAtDescIdDesc(articleId, pageable);
 
         return toGetReplyWithPageResDTO(replyPage);
     }
