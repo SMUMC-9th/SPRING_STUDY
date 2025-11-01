@@ -12,8 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Tag(name="ARTICLE API")
 @RestController
 @RequiredArgsConstructor
@@ -41,9 +39,12 @@ public class ArticleController {
     }
 
     @GetMapping("")
-    @Operation(method = "GET", summary = "Article 전체 조회 API", description = "모든 Article을 조회합니다.")
-    public ApiResponse<List<ArticleResponse.GetArticleResDTO>> getArticleList() {
-        List<ArticleResponse.GetArticleResDTO> articles = articleQueryService.getArticlesList();
+    @Operation(method = "GET", summary = "Article 전체 조회 API", description = "커서 기반으로 Article을 조회합니다.")
+    public ApiResponse<ArticleResponse.GetArticleWithCursorResDTO> getArticleList(
+            @RequestParam(value = "cursor", required = false) String cursor,
+            @RequestParam(value = "limit", defaultValue = "10") int limit
+    ) {
+        ArticleResponse.GetArticleWithCursorResDTO articles = articleQueryService.getArticlesList(cursor, limit);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, articles);
     }
 

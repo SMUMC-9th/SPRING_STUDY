@@ -45,11 +45,23 @@ public class ArticleConverter {
         );
     }
 
-    public static List<ArticleResponse.GetArticleResDTO> toGetArticleResDTO(
+    public static List<ArticleResponse.GetArticleResDTO> toGetArticleResDTOList(
             List<Article> articles
     ) {
         return articles.stream()
                 .map(ArticleConverter::toGetArticleResDTO)
                 .collect(Collectors.toList());
+    }
+
+    public static ArticleResponse.GetArticleWithCursorResDTO toGetArticleWithCursorResDTO(
+            List<Article> articles,
+            boolean hasNext,
+            String cursor
+    ) {
+        return new ArticleResponse.GetArticleWithCursorResDTO(
+                toGetArticleResDTOList(articles),
+                hasNext,
+                cursor
+        );
     }
 }
