@@ -48,11 +48,49 @@ public class ReplyService {
     }
 
     //댓글 목록 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public ReplyResponseDTO.ReplyListDTO getRepliesByArticle(
             Long articleId
     ) {
         List<Reply> list = replyRepository.findByArticleId(articleId);
         return ReplyConverter.toListDTO(list);
+    }
+
+    //전체 수정
+    @Transactional
+    public ReplyResponseDTO.ReplyDTO putReply(
+            Long id,
+            ReplyRequestDTO.PutDTO dto
+    ) {
+        Reply reply = replyRepository.findById(id).orElseThrow(() ->
+                new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        reply.update(dto.content());
+        return ReplyConverter.toReplyDTO(reply);
+
+    }
+
+    //부분 수정
+    @Transactional
+    public ReplyResponseDTO.ReplyDTO patchReply(
+            Long id,
+            ReplyRequestDTO.PatchDTO dto
+    ) {
+        Reply reply = replyRepository.findById(id).orElseThrow(() ->
+                new GeneralException(GeneralErrorCode.NOT_FOUND_404));
+        if(dto.content() != null){
+            reply.patch(dto.content());
+        }
+        return ReplyConverter.toReplyDTO(reply);
+
+    }
+
+    //삭제
+    @Transactional
+    public Long deleteReply(Long id) {
+        Reply reply = replyRepository.findById(id).orElseThrow(
+                () -> new GeneralException(GeneralErrorCode.NOT_FOUND_404)
+        );
+        replyRepository.delete(reply);
+        return id;
     }
 }

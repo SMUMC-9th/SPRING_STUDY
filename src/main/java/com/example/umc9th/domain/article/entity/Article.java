@@ -4,10 +4,9 @@ import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "article")
@@ -30,7 +29,14 @@ public class Article extends BaseEntity {
     @Column(name = "like_num")
     private Integer likeNum;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reply_id")
-    private Reply reply;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "article")
+    private List<Reply> replies = new ArrayList<>();
+
+    public void update(String content) {
+        this.content = content;
+    }
+
+    public void patch(String content) {
+        this.content = content;
+    }
 }
