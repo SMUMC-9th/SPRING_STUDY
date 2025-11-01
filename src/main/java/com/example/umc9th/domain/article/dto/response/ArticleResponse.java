@@ -17,6 +17,13 @@ public class ArticleResponse {
     ) {
     }
 
+    public record GetArticleWithCursorResDTO(
+            List<GetArticleResDTO> articleList,
+            boolean hasNext,
+            String cursor
+    ) {
+    }
+
     public record GetArticleWithReplyResDTO(
             Long articleId,
             String title,

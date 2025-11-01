@@ -4,6 +4,7 @@ import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.reply.dto.request.ReplyRequest;
 import com.example.umc9th.domain.reply.dto.response.ReplyResponse;
 import com.example.umc9th.domain.reply.entity.Reply;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,5 +47,19 @@ public class ReplyConverter {
         return replies.stream()
                 .map(ReplyConverter::toGetReplyWithArticleIdResDTO)
                 .collect(Collectors.toList());
+    }
+
+    public static ReplyResponse.ReplyListWithPageDTO toGetReplyWithPageResDTO(Page<Reply> replyPage) {
+        List<ReplyResponse.GetReplyWithArticleIdResDTO> dtoList =
+                replyPage.getContent().stream()
+                        .map(ReplyConverter::toGetReplyWithArticleIdResDTO)
+                        .collect(Collectors.toList());
+
+        return new ReplyResponse.ReplyListWithPageDTO(
+                dtoList,
+                dtoList.size(),
+                replyPage.getNumber(),
+                replyPage.getTotalElements()
+        );
     }
 }
