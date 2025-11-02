@@ -22,21 +22,24 @@ public class ReplyResponseDTO {
         private Long articleId;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+    }
 
-        public static ReplyDTO from(Reply reply) {
-            return ReplyDTO.builder()
-                .id(reply.getId())
-                .content(reply.getContent())
-                .articleId(reply.getArticle().getId())
-                .createdAt(reply.getCreatedAt())
-                .updatedAt(reply.getUpdatedAt())
-                .build();
-        }
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateReplyResponseDTO {
+        private Long id;
+        private String content;
+        private LocalDateTime updatedAt;
+    }
 
-        public static List<ReplyDTO> fromList(List<Reply> replies) {
-            return replies.stream()
-                .map(ReplyDTO::from)
-                .collect(Collectors.toList());
-        }
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DeleteReplyResponseDTO {
+        private Long id;
+        private LocalDateTime deletedAt;
     }
 }
