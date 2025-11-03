@@ -1,6 +1,5 @@
 package com.example.umc9th.domain.reply.dto.response;
 
-import com.example.umc9th.domain.reply.entity.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ReplyResponseDTO {
 
@@ -41,5 +39,17 @@ public class ReplyResponseDTO {
     public static class DeleteReplyResponseDTO {
         private Long id;
         private LocalDateTime deletedAt;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ReplyPageResponseDTO {
+        private List<ReplyDTO> items;
+        private int pageNo;
+        private int numOfRows;
+        private int totalCount;
+        private int totalPages;
     }
 }

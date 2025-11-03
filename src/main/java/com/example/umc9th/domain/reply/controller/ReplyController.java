@@ -67,4 +67,16 @@ public class ReplyController {
         ReplyResponseDTO.DeleteReplyResponseDTO response = replyCommandService.deleteReply(replyId);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
+
+    @GetMapping("/articles/{articleId}/paginated")
+    @Operation(
+        summary = "특정 게시글 댓글 조회 API - Offset Pagination"
+    )
+    public ApiResponse<ReplyResponseDTO.ReplyPageResponseDTO> getRepliesByArticlePaginated(
+        @PathVariable("articleId") Long articleId,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size) {
+        ReplyResponseDTO.ReplyPageResponseDTO response = replyQueryService.getRepliesByArticlePaginated(articleId, page, size);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
 }
