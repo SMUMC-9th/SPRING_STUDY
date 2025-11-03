@@ -40,10 +40,27 @@ public class ArticleController {
 
     @GetMapping
     @Operation(
-        summary = "게시글 전체 조회 API"
+        summary = "게시글 전체 조회 API - 검색, Cursor 페이지네이션 지원"
     )
-    public ApiResponse<List<ArticleResponseDTO.GetArticlesResponseDTO>> getArticles() {
-        List<ArticleResponseDTO.GetArticlesResponseDTO> response = articleQueryService.getArticles();
+    public ApiResponse<ArticleResponseDTO.ArticleCursorResponseDTO> getArticles(
+        @RequestParam(required = false) String cursor,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(required = false, defaultValue = "id") String sort,
+        @RequestParam(required = false) String keyword) {
+
+        ArticleResponseDTO.ArticleCursorResponseDTO response;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            response = articleQueryService.searchArticlesByTitle(keyword, cursor, size);
+            return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+        }
+
+        response = switch (sort.toLowerCase()) {
+            case "like" -> articleQueryService.getArticlesByLikeCursor(cursor, size);
+            case "created" -> articleQueryService.getArticlesByCreatedAtCursor(cursor, size);
+            default -> articleQueryService.getArticlesByIdCursor(cursor, size);
+        };
+
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
 

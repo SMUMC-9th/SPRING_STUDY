@@ -7,4 +7,8 @@ import java.util.List;
 public interface ArticleQueryService {
     ArticleResponseDTO.GetArticleResponseDTO getArticle(Long id);
     List<ArticleResponseDTO.GetArticlesResponseDTO> getArticles();
+    ArticleResponseDTO.ArticleCursorResponseDTO getArticlesByIdCursor(String cursor, int size);
+    ArticleResponseDTO.ArticleCursorResponseDTO getArticlesByCreatedAtCursor(String cursor, int size);
+    ArticleResponseDTO.ArticleCursorResponseDTO getArticlesByLikeCursor(String cursor, int size);
+    ArticleResponseDTO.ArticleCursorResponseDTO searchArticlesByTitle(String keyword, String cursor, int size);
 }
