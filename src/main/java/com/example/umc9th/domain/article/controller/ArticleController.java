@@ -66,4 +66,14 @@ public class ArticleController {
         Long deletedId = articleService.deleteArticle(id);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, deletedId);
     }
+
+    //좋아요 수 기반 커서 페이지네이션
+    @GetMapping("/cursor")
+    public ApiResponse<ArticleResponseDTO.ArticleCursorPageDTO> getArticlesByCursor(
+            @RequestParam(required = false) String cursor,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        ArticleResponseDTO.ArticleCursorPageDTO response = articleService.getArticlesByCursor(cursor, size);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
 }

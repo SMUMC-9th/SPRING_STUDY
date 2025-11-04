@@ -26,4 +26,13 @@ public class ArticleResponseDTO {
     public record ArticleListDTO(
             List<ArticleSummaryDTO> articles
     ) {}
+
+    //cursor 페이지네이션 DTO
+    @Builder
+    public record ArticleCursorPageDTO(
+            List<ArticleDTO> articles,
+            boolean hasNext,
+            String cursor
+    ) {}
+
 }
