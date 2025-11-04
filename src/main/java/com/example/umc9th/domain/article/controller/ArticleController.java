@@ -1,6 +1,7 @@
 package com.example.umc9th.domain.article.controller;
 
 import com.example.umc9th.domain.article.dto.request.ArticleRequestDTO;
+import com.example.umc9th.domain.article.dto.response.ArticleListResponseDTO;
 import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.service.command.ArticleCommandService;
 import com.example.umc9th.domain.article.service.query.ArticleQueryService;
@@ -40,9 +41,10 @@ public class ArticleController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, article);
     }
 
+    //Cursor 기반 페이지네이션
     @GetMapping("/articles")
-    public ApiResponse<List<Article>> getArticles() {
-        List<Article> articleList = articleQueryService.getArticles();
+    public ApiResponse<ArticleListResponseDTO> getArticles(@RequestParam Long cursorId, @RequestParam(defaultValue = "10") int size) {
+        ArticleListResponseDTO articleList = articleQueryService.getArticles(cursorId, size);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, articleList);
     }
 

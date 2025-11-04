@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
+    Slice<Article> findByOrderByIdDesc(Pageable pageable);
     Slice<Article> findAllByIdLessThanOrderByIdDesc(Long id, Pageable pageable);
 }
