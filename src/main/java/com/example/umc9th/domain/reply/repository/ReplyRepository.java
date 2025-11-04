@@ -9,4 +9,7 @@ import java.util.List;
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
     //게시글 댓글 전체 조회
     List<Reply> findAllByArticle(Article article);
+
+    // 게시글에 댓글이 존재하는지 여부 확인
+    boolean existsByArticle_Id(Long articleId);
 }
