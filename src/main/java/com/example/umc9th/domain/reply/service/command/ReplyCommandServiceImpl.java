@@ -6,9 +6,12 @@ import com.example.umc9th.domain.article.exception.ArticleException;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
 import com.example.umc9th.domain.reply.converter.ReplyConverter;
 import com.example.umc9th.domain.reply.dto.request.ReplyRequestDTO;
+import com.example.umc9th.domain.reply.dto.response.ReplyResponseDTO;
 import com.example.umc9th.domain.reply.entity.Reply;
 import com.example.umc9th.domain.reply.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
