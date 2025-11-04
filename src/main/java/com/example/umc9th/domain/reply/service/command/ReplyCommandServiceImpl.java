@@ -1,7 +1,6 @@
 package com.example.umc9th.domain.reply.service.command;
 
 import com.example.umc9th.domain.article.entity.Article;
-import com.example.umc9th.domain.article.repository.ArticleRepository;
 import com.example.umc9th.domain.article.service.query.ArticleQueryService;
 import com.example.umc9th.domain.reply.dto.request.ReplyRequestDTO;
 import com.example.umc9th.domain.reply.entity.Reply;
@@ -27,7 +26,6 @@ public class ReplyCommandServiceImpl implements ReplyCommandService{
         Article article = articleQueryService.getArticle(articleId);
 
         Reply reply = Reply.builder()
-                        .title(dto.getTitle())
                         .content(dto.getContent())
                         .build();
 
@@ -41,7 +39,7 @@ public class ReplyCommandServiceImpl implements ReplyCommandService{
     @Override
     public Reply updateReply(Long replyId, ReplyRequestDTO.UpdateReplyDTO dto) {
         Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND_404));
-        reply.update(dto.getTitle(), dto.getContent());
+        reply.update(dto.getContent());
         return reply;
     }
 

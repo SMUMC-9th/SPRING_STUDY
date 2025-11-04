@@ -16,9 +16,6 @@ public class Reply extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 50, nullable = false)
-    private String title;
-
     @Column(name = "content", nullable = false)
     private String content;
 
@@ -27,8 +24,7 @@ public class Reply extends BaseEntity {
     @JoinColumn(name = "article_id")
     private Article article;
 
-    public void update(String title, String content){
-        this.title = title;
+    public void update(String content){
         this.content = content;
     }
 }

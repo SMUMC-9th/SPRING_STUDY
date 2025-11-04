@@ -22,7 +22,6 @@ public class ArticleCommandServiceImpl implements ArticleCommandService{
         return articleRepository.save(
                 // Builder 패턴 사용
                 Article.builder()
-                        .title(dto.getTitle())
                         .content(dto.getContent())
                         .build()
         );
