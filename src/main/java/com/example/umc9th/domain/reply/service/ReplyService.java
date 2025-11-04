@@ -10,6 +10,8 @@ import com.example.umc9th.domain.reply.repository.ReplyRepository;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,4 +95,18 @@ public class ReplyService {
         replyRepository.delete(reply);
         return id;
     }
+
+    //댓글 조회 페이지네이션
+    @Transactional(readOnly = true)
+    public ReplyResponseDTO.ReplyPageDTO getRepliesByArticleWithPagination(
+            Long articleId,
+            int page,
+            int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return ReplyConverter.toPageDTO(
+                replyRepository.findAllByArticleIdOrderByCreatedAtDesc(articleId, pageable));
+    }
+
 }
