@@ -18,4 +18,16 @@ public class ArticleResponseDTO {
             LocalDateTime updatedAt
     ) {}
 
+    @Builder
+    public record UpdateArticleResDTO(
+            Long articleId,
+            String title,
+            String content,
+            Integer likeNum,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+    ) {}
+
+
+
 }
