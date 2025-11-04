@@ -52,6 +52,15 @@ public class ArticleController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK,response);
     }
 
+    @Operation(summary = "좋아요순 게시글 조회", description = "좋아요순으로 게시글 목록을 조회합니다.")
+    @GetMapping("/articles/like")
+    public ApiResponse<List<Article>> getArticlesByLikeCursor(
+            @RequestParam(required = false) String cursor,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        List<Article> articles = articleQueryService.getArticlesByLikeCursor(cursor, size);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, articles);
+    }
 
     @Operation(summary = "전체 게시글 조회", description = "전체 게시글 목록을 조회합니다.")
     @GetMapping("/articles")
