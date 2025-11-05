@@ -101,7 +101,7 @@ public class ArticleQueryServiceImpl implements ArticleQueryService {
         }
 
         Pageable pageable = PageRequest.of(0, size);
-        Slice<Article> articles = articleRepository.searchByTitleWithCursor(keyword, pageable);
+        Slice<Article> articles = articleRepository.searchByTitleWithCursor(keyword, cursor, pageable);
 
         return buildCursorResponse(articles, "created");
     }

@@ -45,10 +45,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("""
         SELECT a 
         FROM Article a 
-        WHERE a.title 
+        WHERE a.title
         LIKE %:keyword%
+        AND (:cursor IS NULL OR CONCAT(FUNCTION('DATE_FORMAT', a.createdAt, '%Y%m%d%H%i%s'), '_', a.id) < :cursor)
         ORDER BY a.createdAt DESC, a.id DESC
-        """)
-    Slice<Article> searchByTitleWithCursor(@Param("keyword") String keyword, Pageable pageable);
-
+    """)
+    Slice<Article> searchByTitleWithCursor(@Param("keyword") String keyword, @Param("cursor") String cursor, Pageable pageable);
 }
