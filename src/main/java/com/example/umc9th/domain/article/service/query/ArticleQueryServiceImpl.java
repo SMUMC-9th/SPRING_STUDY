@@ -87,7 +87,19 @@ public class ArticleQueryServiceImpl implements ArticleQueryService {
 
     @Override
     @Transactional(readOnly = true)
-    public ArticleResponseDTO.ArticleCursorResponseDTO searchArticlesByTitle(String keyword, String cursor, int size) {
+    public ArticleResponseDTO.ArticleCursorResponseDTO searchArticlesByTitle(String keyword, String cursor, int size, String sort) {
+        if (keyword == null || keyword.isEmpty()) {
+            if (sort == null || sort.isEmpty()) {
+                sort = "id";
+            }
+
+            return switch (sort.toLowerCase()) {
+                case "like" -> getArticlesByLikeCursor(cursor, size);
+                case "created" -> getArticlesByCreatedAtCursor(cursor, size);
+                default -> getArticlesByIdCursor(cursor, size);
+            };
+        }
+
         Pageable pageable = PageRequest.of(0, size);
         Slice<Article> articles = articleRepository.searchByTitleWithCursor(keyword, pageable);
 

@@ -10,5 +10,5 @@ public interface ArticleQueryService {
     ArticleResponseDTO.ArticleCursorResponseDTO getArticlesByIdCursor(String cursor, int size);
     ArticleResponseDTO.ArticleCursorResponseDTO getArticlesByCreatedAtCursor(String cursor, int size);
     ArticleResponseDTO.ArticleCursorResponseDTO getArticlesByLikeCursor(String cursor, int size);
-    ArticleResponseDTO.ArticleCursorResponseDTO searchArticlesByTitle(String keyword, String cursor, int size);
+    ArticleResponseDTO.ArticleCursorResponseDTO searchArticlesByTitle(String keyword, String cursor, int size, String sort);
 }

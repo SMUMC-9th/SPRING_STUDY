@@ -48,18 +48,7 @@ public class ArticleController {
         @RequestParam(required = false, defaultValue = "id") String sort,
         @RequestParam(required = false) String keyword) {
 
-        ArticleResponseDTO.ArticleCursorResponseDTO response;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            response = articleQueryService.searchArticlesByTitle(keyword, cursor, size);
-            return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
-        }
-
-        response = switch (sort.toLowerCase()) {
-            case "like" -> articleQueryService.getArticlesByLikeCursor(cursor, size);
-            case "created" -> articleQueryService.getArticlesByCreatedAtCursor(cursor, size);
-            default -> articleQueryService.getArticlesByIdCursor(cursor, size);
-        };
+        ArticleResponseDTO.ArticleCursorResponseDTO response = articleQueryService.searchArticlesByTitle(keyword, cursor, size, sort);
 
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
     }
