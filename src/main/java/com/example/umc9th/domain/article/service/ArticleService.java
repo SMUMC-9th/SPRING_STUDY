@@ -95,6 +95,8 @@ public class ArticleService {
         Slice<Article> slice = articleRepository.findByCursor(cursor, size);
         List<Article> articles = slice.getContent();
 
+        List<ArticleResponseDTO.ArticleDTO> articleDTOs = ArticleConverter.toArticleDTOList(articles);
+
         String nextCursor = null;
 
         if (!articles.isEmpty()) {
@@ -102,6 +104,6 @@ public class ArticleService {
             nextCursor = String.format("%010d%010d", last.getLikeNum(), last.getId());
         }
 
-        return ArticleConverter.toCursorPageDTO(articles, slice.hasNext(), nextCursor);
+        return ArticleConverter.toCursorPageDTO(articleDTOs, slice.hasNext(), nextCursor);
     }
 }

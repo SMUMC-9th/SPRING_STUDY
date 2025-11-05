@@ -51,14 +51,14 @@ public class ArticleConverter {
                 .collect(Collectors.toList());
     }
 
-    //엔티티 리스트 -> 커서 기반 응답 DTO
+    //DTO 리스트 -> 커서 기반 응답 DTO
     public static ArticleResponseDTO.ArticleCursorPageDTO toCursorPageDTO(
-            List<Article> articles,
+            List<ArticleResponseDTO.ArticleDTO> articleDTOs,
             boolean hasNext,
             String cursor
     ){
         return new ArticleResponseDTO.ArticleCursorPageDTO(
-                toArticleDTOList(articles),
+                articleDTOs,
                 hasNext,
                 cursor);
     }
