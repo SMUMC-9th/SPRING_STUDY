@@ -68,7 +68,7 @@ public class ArticleController {
     }
 
     //좋아요 수 기반 커서 페이지네이션
-    @GetMapping("/cursor")
+    @GetMapping("/posts/articles")
     public ApiResponse<ArticleResponseDTO.ArticleCursorPageDTO> getArticlesByCursor(
             @RequestParam(required = false) String cursor,
             @RequestParam(defaultValue = "10") int size
