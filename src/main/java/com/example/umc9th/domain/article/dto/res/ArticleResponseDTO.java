@@ -1,8 +1,6 @@
 package com.example.umc9th.domain.article.dto.res;
 
-import com.example.umc9th.domain.reply.dto.res.ReplyResponseDTO;
 import lombok.Builder;
-import org.springframework.data.domain.Slice;
 
 import java.util.List;
 

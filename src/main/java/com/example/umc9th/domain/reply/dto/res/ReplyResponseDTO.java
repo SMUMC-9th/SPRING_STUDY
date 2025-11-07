@@ -1,7 +1,6 @@
 package com.example.umc9th.domain.reply.dto.res;
 
 import lombok.Builder;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 

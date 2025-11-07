@@ -8,8 +8,6 @@ import com.example.umc9th.domain.reply.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ReplyQueryServiceImpl implements ReplyQueryService {

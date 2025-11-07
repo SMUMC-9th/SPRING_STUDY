@@ -7,14 +7,9 @@ import com.example.umc9th.domain.article.entity.QArticle;
 import com.example.umc9th.domain.article.exception.ArticleException;
 import com.example.umc9th.domain.article.exception.code.ArticleErrorCode;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
-import com.example.umc9th.domain.reply.entity.QReply;
 import com.example.umc9th.domain.reply.repository.ReplyRepository;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
