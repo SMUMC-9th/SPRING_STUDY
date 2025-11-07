@@ -54,21 +54,6 @@ public class ReplyController {
         return ApiResponse.onSuccess(code, ReplyConverter.toGetReply(reply));
     }
 
-    // 전체 댓글 조회
-    @GetMapping("/replies")
-    public ApiResponse<ReplyResponseDTO.GetReplies> getReplies(
-
-    ){
-
-        // 전체 조회
-        List<Reply> replies = replyQueryService.getReplies();
-
-        // 성공 코드 생성
-        ReplySuccessCode code = ReplySuccessCode.FOUND;
-
-        return ApiResponse.onSuccess(code, ReplyConverter.toGetReplies(replies));
-    }
-
     // 댓글 수정
     @PutMapping("/replies/{replyId}")
     public ApiResponse<ReplyResponseDTO.UpdateReply> updateReply(
@@ -88,5 +73,14 @@ public class ReplyController {
     ){
         ReplySuccessCode code = ReplySuccessCode.DELETE;
         return ApiResponse.onSuccess(code, replyCommandService.deleteReply(replyId));
+    }
+
+    // 댓글 Offset 페이징
+    @GetMapping("/replies")
+    public ApiResponse<ReplyResponseDTO.ReplyOffset> replyOffset(
+            @RequestParam(value = "cursor", required = false, defaultValue = "-1") String cursor,
+            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
+    ){
+        return ApiResponse.onSuccess(ReplySuccessCode.FOUND, replyQueryService.getReplies(cursor, size));
     }
 }

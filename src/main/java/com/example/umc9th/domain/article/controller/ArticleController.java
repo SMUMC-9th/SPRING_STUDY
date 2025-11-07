@@ -3,7 +3,6 @@ package com.example.umc9th.domain.article.controller;
 import com.example.umc9th.domain.article.converter.ArticleConverter;
 import com.example.umc9th.domain.article.dto.req.ArticleRequestDTO;
 import com.example.umc9th.domain.article.dto.res.ArticleResponseDTO;
-import com.example.umc9th.domain.article.dto.res.ArticleResponseDTO.GetAllArticles;
 import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.exception.code.ArticleSuccessCode;
 import com.example.umc9th.domain.article.service.command.ArticleCommandService;
@@ -53,21 +52,6 @@ public class ArticleController {
         return ApiResponse.onSuccess(code, ArticleConverter.toGetArticleDTO(article));
     }
 
-    // 전체 게시글 조회
-    @GetMapping("/articles")
-    public ApiResponse<GetAllArticles<Article>> getArticles(
-
-    ){
-
-        // 전체 조회
-        List<Article> articles = articleQueryService.getArticles();
-
-        // 성공 코드 생성
-        ArticleSuccessCode code = ArticleSuccessCode.FOUND;
-
-        return ApiResponse.onSuccess(code, ArticleConverter.toGetAllArticlesDTO(articles));
-    }
-
     // 게시글 수정
     @PatchMapping("/articles/{articleId}")
     public ApiResponse<ArticleResponseDTO.UpdateArticle> updateArticle(
@@ -91,5 +75,23 @@ public class ArticleController {
     ){
         ArticleSuccessCode code = ArticleSuccessCode.DELETE;
         return ApiResponse.onSuccess(code, articleCommandService.deleteArticle(articleId));
+    }
+
+    // 모든 게시글 조회: 게시글 cursor, sort
+    @GetMapping("/articles")
+    public ApiResponse<ArticleResponseDTO.GetArticlesQueryDsl> getArticles(
+            @RequestParam(value = "cursor", required = false, defaultValue = "-1") String cursor,
+            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
+            @RequestParam(value = "sort", defaultValue = "id") String sort
+    ){
+        return ApiResponse.onSuccess(ArticleSuccessCode.FOUND, articleQueryService.getArticles(cursor, size, sort));
+    }
+
+    // 제목 검색
+    @GetMapping("/articles/search")
+    public ApiResponse<ArticleResponseDTO.SearchArticle> searchArticles(
+            @RequestParam(value = "query") String query
+    ){
+        return ApiResponse.onSuccess(ArticleSuccessCode.FOUND, articleQueryService.searchArticle(query));
     }
 }

@@ -4,6 +4,7 @@ package com.example.umc9th.domain.article.converter;
 import com.example.umc9th.domain.article.dto.req.ArticleRequestDTO;
 import com.example.umc9th.domain.article.dto.res.ArticleResponseDTO;
 import com.example.umc9th.domain.article.entity.Article;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -41,12 +42,30 @@ public class ArticleConverter {
                 .build();
     }
 
-    // 전체 게시글 조회
-    public static <T> ArticleResponseDTO.GetAllArticles<T> toGetAllArticlesDTO(
-            List<T> articles
+    // 전체 게시글 조회: JPA
+    public static ArticleResponseDTO.GetArticles toGetArticlesDTO(
+            Slice<Article> articles,
+            String cursor
     ){
-        return ArticleResponseDTO.GetAllArticles.<T>builder()
+        return ArticleResponseDTO.GetArticles.builder()
+                .articles(articles.stream().map(ArticleConverter::toGetArticleDTO).toList())
+                .cursor(cursor)
+                .hasNext(articles.hasNext())
+                .build();
+    }
+
+    // 전체 게시글 조회: QueryDSL
+    public static ArticleResponseDTO.GetArticlesQueryDsl toGetArticlesQueryDSL(
+            List<ArticleResponseDTO.GetArticle> articles,
+            String cursor,
+            Integer pageSize,
+            boolean hasNext
+    ){
+        return ArticleResponseDTO.GetArticlesQueryDsl.builder()
                 .articles(articles)
+                .cursor(cursor)
+                .pageSize(pageSize)
+                .hasNext(hasNext)
                 .build();
     }
 
@@ -65,6 +84,30 @@ public class ArticleConverter {
     ){
         return ArticleResponseDTO.DeleteArticle.builder()
                 .id(article.getId())
+                .build();
+    }
+
+    // 페이지네이션
+    public static <T> ArticleResponseDTO.Page<T> toPageDTO(
+            List<T> articles,
+            String cursor,
+            Integer pageSize,
+            boolean hasNext
+    ){
+        return ArticleResponseDTO.Page.<T>builder()
+                .result(articles)
+                .cursor(cursor)
+                .pageSize(pageSize)
+                .hasNext(hasNext)
+                .build();
+    }
+
+    // 게시글 검색
+    public static ArticleResponseDTO.SearchArticle toSearchArticleDTO(
+            List<ArticleResponseDTO.GetArticle> articles
+    ){
+        return ArticleResponseDTO.SearchArticle.builder()
+                .articles(articles)
                 .build();
     }
 }

@@ -12,6 +12,9 @@ public enum ArticleErrorCode implements BaseErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND,
             "ARTICLE404",
             "해당 게시글이 존재하지 않습니다."),
+    BAD_REQUEST_SORT(HttpStatus.BAD_REQUEST,
+            "ARTICLE400",
+            "커서값이 없습니다."),
     ;
 
     private final HttpStatus status;

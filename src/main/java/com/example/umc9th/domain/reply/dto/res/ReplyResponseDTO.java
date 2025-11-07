@@ -1,6 +1,7 @@
 package com.example.umc9th.domain.reply.dto.res;
 
 import lombok.Builder;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -36,5 +37,12 @@ public class ReplyResponseDTO {
     @Builder
     public record DeleteReply(
             Long id
+    ){}
+
+    // 댓글 Offset
+    @Builder
+    public record ReplyOffset(
+            List<GetReply> replies,
+            Integer pageSize
     ){}
 }

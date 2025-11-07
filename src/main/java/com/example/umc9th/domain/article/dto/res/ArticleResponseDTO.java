@@ -1,6 +1,8 @@
 package com.example.umc9th.domain.article.dto.res;
 
+import com.example.umc9th.domain.reply.dto.res.ReplyResponseDTO;
 import lombok.Builder;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -18,13 +20,8 @@ public class ArticleResponseDTO {
     public record GetArticle(
             Long id,
             String title,
-            String content
-    ){}
-
-    // 전체 게시글 조회
-    @Builder
-    public record GetAllArticles <T>(
-        List<T> articles
+            String content,
+            Integer likeNum
     ){}
 
     // 게시글 수정
@@ -37,5 +34,37 @@ public class ArticleResponseDTO {
     @Builder
     public record DeleteArticle(
             Long id
+    ){}
+
+    // 전체 게시글 조회: JPA
+    @Builder
+    public record GetArticles(
+            List<GetArticle> articles,
+            String cursor,
+            boolean hasNext
+    ){}
+
+    // 전체 게시글 조회: QueryDSL
+    @Builder
+    public record GetArticlesQueryDsl(
+            List<GetArticle> articles,
+            String cursor,
+            Integer pageSize,
+            Boolean hasNext
+    ){}
+
+    // 페이지네이션 틀
+    @Builder
+    public record Page<T>(
+            List<T> result,
+            String cursor,
+            Integer pageSize,
+            Boolean hasNext
+    ){}
+
+    // 게시글 검색
+    @Builder
+    public record SearchArticle(
+            List<GetArticle> articles
     ){}
 }
