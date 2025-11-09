@@ -68,4 +68,14 @@ public class ArticleResponseDTO {
         private Long id;
         private LocalDateTime deletedAt;
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ArticleCursorResponseDTO {
+        private List<GetArticlesResponseDTO> items;
+        private boolean hasNext;
+        private String cursor;
+    }
 }
