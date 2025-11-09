@@ -7,10 +7,9 @@ import com.example.umc9th.domain.article.exception.ArticleErrorCode;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,8 +26,19 @@ public class ArticleQueryServiceImpl implements ArticleQueryService {
     }
 
     @Override
-    public List<ArticleResponse.GetArticleResDTO> getArticlesList() {
-        List<Article> articleList = articleRepository.findAll();
-        return ArticleConverter.toGetArticleResDTO(articleList);
+    public ArticleResponse.GetArticleWithCursorResDTO getArticlesList(String cursor, int limit) {
+
+        Slice<Article> articleList = articleRepository.findByCursor(cursor, limit);
+
+        boolean hasNext = articleList.hasNext();
+
+        String nextCursor = null;
+
+        if (!articleList.isEmpty()) {
+            Article last = articleList.getContent().getLast();
+            nextCursor = String.format("%010d%010d", last.getLikeNum(), last.getId());
+        }
+
+        return ArticleConverter.toGetArticleWithCursorResDTO(articleList.getContent(), hasNext, nextCursor);
     }
 }

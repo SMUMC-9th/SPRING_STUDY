@@ -1,6 +1,7 @@
 package com.example.umc9th.domain.reply.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ReplyResponse {
 
@@ -18,6 +19,14 @@ public class ReplyResponse {
             String content,
             LocalDateTime createdAt,
             LocalDateTime updatedAt
+    ) {
+    }
+
+    public record ReplyListWithPageDTO(
+            List<GetReplyWithArticleIdResDTO> item,
+            int numOfRows,
+            int pageNo,
+            long totalCount
     ) {
     }
 }

@@ -1,6 +1,8 @@
 package com.example.umc9th.domain.reply.repository;
 
 import com.example.umc9th.domain.reply.entity.Reply;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -10,4 +12,8 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     List<Reply> findByArticleId(
             @Param("articleId") Long articleId
     );
+
+    boolean existsByArticleId(Long articleId);
+
+    Page<Reply> findByArticleIdOrderByCreatedAtDescIdDesc(Long articleId, Pageable pageable);
 }
