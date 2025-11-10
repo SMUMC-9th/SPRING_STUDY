@@ -1,10 +1,15 @@
 package com.example.umc9th.domain.article.service.query;
 
+import com.example.umc9th.domain.article.dto.response.ArticleListResponseDTO;
+import com.example.umc9th.domain.article.dto.response.ArticleResponseDTO;
 import com.example.umc9th.domain.article.entity.Article;
 import com.example.umc9th.domain.article.repository.ArticleRepository;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +22,32 @@ public class ArticleQueryServiceImpl implements ArticleQueryService{
 
     private final ArticleRepository articleRepository;
 
+    // cursor 기반 페이지네이션
     @Override
-    public List<Article> getArticles() {
-        // 구현, 힌트: findAll()
-        return articleRepository.findAll();
+    public ArticleListResponseDTO getArticles(Long cursorId, int size) {
+        Pageable pageable = PageRequest.of(0, size);
+        Slice<Article> articleSlice;
+
+        // 첫 페이지 조회
+        if(cursorId == null){
+            articleSlice = articleRepository.findByOrderByIdDesc(pageable);
+        }
+        else{
+            articleSlice = articleRepository.findAllByIdLessThanOrderByIdDesc(cursorId, pageable);
+        }
+        List<ArticleResponseDTO> articleList = articleSlice.stream().map(ArticleResponseDTO::from).toList();
+
+        //다음 커서 id 계산
+        Long nextCursorId = null;
+        if(!articleList.isEmpty()){
+            //목록의 마지막 게시글 DTO에서 id를 가져오기
+            nextCursorId = articleList.get(articleList.size() - 1).id();
+        }
+        return new ArticleListResponseDTO(
+                articleList,
+                nextCursorId,
+                articleSlice.hasNext()
+        );
     }
 
     @Override
