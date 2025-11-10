@@ -1,5 +1,6 @@
 package com.example.umc9th.global.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +13,10 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.context.SecurityContextRepository;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CorsConfig corsConfig;
 
     private String[] allowUrl = {
             //"/auth/sign-up",
@@ -33,6 +37,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 // Http Basic 인증 방식 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)
+                // CORS 적용
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 // formLogin 설정
                 .formLogin(formLogin -> formLogin
                         // Form login에서 사용하는 SecurityContextRepository 설정
