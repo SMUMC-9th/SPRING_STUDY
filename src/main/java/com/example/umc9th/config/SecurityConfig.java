@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .securityContext(context -> context
                         .securityContextRepository(securityContextRepository())
                 )
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         ;
 
         return http.build();
@@ -74,5 +75,18 @@ public class SecurityConfig {
         return new HttpSessionSecurityContextRepository();
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("허용하고자 하는 도메인 주소");
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Refresh"));
+        configuration.setExposedHeaders(List.of("Authorization", "Refresh"));
+        configuration.setAllowCredentials(true);
 
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+
+    }
 }
