@@ -11,6 +11,7 @@ import com.example.umc9th.global.exception.GeneralSuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,8 +42,18 @@ public class ReplyController {
         );
     }
 
+    @Operation(summary = "offset기반 게시글 댓글 전체 조회", description = "특정 게시글의 댓글 전체를 조회합니다.")
+    @GetMapping("/articles/{articleId}/replies/all")
+    public Page<ReplyResponseDTO.ReplyResDTO> getReplies(
+            @PathVariable Long articleId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return replyQueryService.getRepliesByArticle(articleId, page, size);
+    }
+
     @Operation(summary = "게시글 댓글 전체 조회", description = "특정 게시글의 댓글 전체를 조회합니다.")
-    @GetMapping("/article/{articleId}")
+    @GetMapping("/articles/{articleId}/replies")
     public ApiResponse<List<ReplyResponseDTO.ReplyResDTO>> getRepliesByArticle(@PathVariable Long articleId) {
         List<Reply> replies = replyQueryService.getRepliesByArticle(articleId);
 

@@ -28,6 +28,12 @@ public class ArticleResponseDTO {
             LocalDateTime updatedAt
     ) {}
 
+    @Builder
+    public record ArticleCursorDTO(
+            List<ArticleDetailDTO> articles,
+            String nextCursor
+    ){}
+
 
 
 }

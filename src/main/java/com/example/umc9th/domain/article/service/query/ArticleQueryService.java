@@ -8,4 +8,6 @@ import java.util.List;
 public interface ArticleQueryService {
     ArticleResponseDTO.ArticleDetailDTO getArticle(Long id);
     List<Article> getArticles();
+
+    ArticleResponseDTO.ArticleCursorDTO getArticlesByLikeCursor(String lastCursor, int limit);
 }

@@ -34,4 +34,13 @@ public class ArticleQueryServiceImpl implements ArticleQueryService {
         // findById의 결과로 Optional 형태가 나올 예정인데 1주차 워크북의 구현된 Error code를 참고하여 ArticleErrorCode를 작성해보시고 직접 에러를 발생시키셔도 좋고 아니면 일단 .get()을 사용하시고 제가 세미나에서 알려드릴게요
         return ArticleConverter.toDetailDTO(article);
     }
+
+    @Override
+    public ArticleResponseDTO.ArticleCursorDTO getArticlesByLikeCursor(String lastCursor, int limit) {
+        // 첫 조회일 경우 cursor를 아주 큰 값으로 설정
+        String cursor = lastCursor == null ? "99999999999999999999" : lastCursor; //concat길이하고 문자열 길이 맞춰야됨
+        List<Article> articles = articleRepository.findArticlesByLikeNumCursor(cursor, limit);
+        return ArticleConverter.toCursorPageDTO(articles);
+    }
+
 }
