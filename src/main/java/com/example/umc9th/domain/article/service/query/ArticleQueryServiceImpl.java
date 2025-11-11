@@ -36,10 +36,11 @@ public class ArticleQueryServiceImpl implements ArticleQueryService {
     }
 
     @Override
-    public List<Article> getArticlesByLikeCursor(String lastCursor, int limit) {
+    public ArticleResponseDTO.ArticleCursorDTO getArticlesByLikeCursor(String lastCursor, int limit) {
         // 첫 조회일 경우 cursor를 아주 큰 값으로 설정
         String cursor = lastCursor == null ? "99999999999999999999" : lastCursor; //concat길이하고 문자열 길이 맞춰야됨
-        return articleRepository.findArticlesByLikeNumCursor(cursor, limit);
+        List<Article> articles = articleRepository.findArticlesByLikeNumCursor(cursor, limit);
+        return ArticleConverter.toCursorPageDTO(articles);
     }
 
 }

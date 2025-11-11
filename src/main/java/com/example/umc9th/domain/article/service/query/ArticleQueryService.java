@@ -9,5 +9,5 @@ public interface ArticleQueryService {
     ArticleResponseDTO.ArticleDetailDTO getArticle(Long id);
     List<Article> getArticles();
 
-    List<Article> getArticlesByLikeCursor(String lastCursor, int limit);
+    ArticleResponseDTO.ArticleCursorDTO getArticlesByLikeCursor(String lastCursor, int limit);
 }
