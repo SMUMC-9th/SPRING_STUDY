@@ -5,6 +5,7 @@ import com.example.umc9th.domain.article.dto.ArticleResponseDTO;
 import com.example.umc9th.domain.article.entity.Article;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArticleConverter {
 
@@ -41,6 +42,25 @@ public class ArticleConverter {
         return ArticleResponseDTO.ArticleListDTO.builder()
                 .articles(articles.stream().map(ArticleConverter::toSummaryDTO).toList())
                 .build();
+    }
+
+    //엔티티 리스트 -> DTO들의 리스트
+    public static List<ArticleResponseDTO.ArticleDTO> toArticleDTOList(List<Article> articles) {
+        return articles.stream()
+                .map(ArticleConverter::toArticleDTO)
+                .collect(Collectors.toList());
+    }
+
+    //DTO 리스트 -> 커서 기반 응답 DTO
+    public static ArticleResponseDTO.ArticleCursorPageDTO toCursorPageDTO(
+            List<ArticleResponseDTO.ArticleDTO> articleDTOs,
+            boolean hasNext,
+            String cursor
+    ){
+        return new ArticleResponseDTO.ArticleCursorPageDTO(
+                articleDTOs,
+                hasNext,
+                cursor);
     }
 
 }

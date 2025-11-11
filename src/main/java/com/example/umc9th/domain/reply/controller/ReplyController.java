@@ -71,4 +71,18 @@ public class ReplyController {
         Long deletedId = replyService.deleteReply(id);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, deletedId);
     }
+
+    // 댓글 목록 페이지네이션
+    @GetMapping("/articles/{articleId}/replies/page")
+    public ApiResponse<ReplyResponseDTO.ReplyPageDTO> getRepliesByArticleWithPagination(
+            @PathVariable Long articleId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        ReplyResponseDTO.ReplyPageDTO response =
+                replyService.getRepliesByArticleWithPagination(articleId, page, size);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+
 }

@@ -20,6 +20,13 @@ public class ReplyResponseDTO {
             List<ReplyDTO> replies
     ) {}
 
+    @Builder
+    public record ReplyPageDTO(
+            List<ReplyDTO> replies,
+            int page,
+            int totalPages,
+            long totalCount
+    ) {}
 
 
 }

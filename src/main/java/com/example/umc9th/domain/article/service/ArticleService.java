@@ -8,6 +8,7 @@ import com.example.umc9th.domain.article.repository.ArticleRepository;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,5 +87,23 @@ public class ArticleService {
         );
         articleRepository.delete(article);
         return id;
+    }
+
+    //커서 기반 게시글 목록 조회
+    @Transactional(readOnly = true)
+    public ArticleResponseDTO.ArticleCursorPageDTO getArticlesByCursor(String cursor, int size) {
+        Slice<Article> slice = articleRepository.findByCursor(cursor, size);
+        List<Article> articles = slice.getContent();
+
+        List<ArticleResponseDTO.ArticleDTO> articleDTOs = ArticleConverter.toArticleDTOList(articles);
+
+        String nextCursor = null;
+
+        if (!articles.isEmpty()) {
+            Article last = articles.getLast();
+            nextCursor = String.format("%010d%010d", last.getLikeNum(), last.getId());
+        }
+
+        return ArticleConverter.toCursorPageDTO(articleDTOs, slice.hasNext(), nextCursor);
     }
 }
