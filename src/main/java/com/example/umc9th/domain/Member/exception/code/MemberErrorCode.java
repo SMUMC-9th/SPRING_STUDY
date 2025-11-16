@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.Member.exception;
+package com.example.umc9th.domain.Member.exception.code;
 
 import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import lombok.AllArgsConstructor;

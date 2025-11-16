@@ -15,6 +15,8 @@ public class MemberConverter {
     }
 
     public static MemberResponseDTO.SignUpResponseDTO toSignUpResponseDTO(Member member) {
-        return MemberResponseDTO.SignUpResponseDTO.from(member);
+        return MemberResponseDTO.SignUpResponseDTO.builder()
+                .id(member.getId())
+                .build();
     }
 }
