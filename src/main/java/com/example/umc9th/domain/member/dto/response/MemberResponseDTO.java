@@ -10,10 +10,19 @@ public class MemberResponseDTO {
     @Builder
     public static class SignUpResponseDTO {
         private Long id;
+
         public static SignUpResponseDTO from(Member member) {
             return SignUpResponseDTO.builder()
                 .id(member.getId())
                 .build();
         }
+    }
+
+    @Getter
+    @Builder
+    public static class LoginResponseDTO {
+        private Long id;
+        private String accessToken;
+        private String refreshToken;
     }
 }
