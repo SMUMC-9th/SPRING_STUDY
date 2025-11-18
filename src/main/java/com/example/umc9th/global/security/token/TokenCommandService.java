@@ -1,4 +1,4 @@
-package com.example.umc9th.global.token;
+package com.example.umc9th.global.security.token;
 
 
 import com.example.umc9th.domain.member.dto.response.MemberResponseDTO;

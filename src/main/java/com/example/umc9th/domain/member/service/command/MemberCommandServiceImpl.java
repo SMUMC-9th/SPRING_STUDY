@@ -6,7 +6,7 @@ import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.exception.MemberErrorCode;
 import com.example.umc9th.domain.member.exception.MemberException;
 import com.example.umc9th.domain.member.repository.MemberRepository;
-import com.example.umc9th.global.token.TokenCommandService;
+import com.example.umc9th.global.security.token.TokenCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
