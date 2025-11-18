@@ -26,4 +26,12 @@ public class MemberController {
     ) {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, memberCommandService.signUp(dto));
     }
+
+    @PostMapping("/login")
+    @Operation(method="POST", summary="로그인 API", description="로그인 합니다.")
+    public ApiResponse<MemberResponseDTO.LoginResponseDTO> login(
+            @RequestBody MemberRequestDTO.LoginRequestDTO dto
+    ){
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK_200, memberCommandService.login(dto));
+    }
 }

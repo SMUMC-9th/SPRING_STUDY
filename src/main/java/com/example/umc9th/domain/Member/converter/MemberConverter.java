@@ -19,4 +19,14 @@ public class MemberConverter {
                 .id(member.getId())
                 .build();
     }
+
+    public static MemberResponseDTO.LoginResponseDTO toLoginResponseDTO(
+            Member member, String accessToken, String refreshToken) {
+
+        return MemberResponseDTO.LoginResponseDTO.builder()
+                .id(member.getId())
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
 }
