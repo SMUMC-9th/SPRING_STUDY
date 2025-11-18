@@ -9,4 +9,9 @@ public class MemberRequestDTO {
         private String username;
         private String password;
     }
+
+    public record LoginRequestDTO(
+            String username,
+            String password
+    ) {}
 }

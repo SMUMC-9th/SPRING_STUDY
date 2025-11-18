@@ -24,4 +24,12 @@ public class MemberController {
         Member member = memberCommandService.signUp(dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK,MemberResponseDTO.SignUpResponseDTO.from(member));
     }
+
+    @PostMapping("/login")
+    public ApiResponse<MemberResponseDTO.LoginResponseDTO> signIn(@RequestBody MemberRequestDTO.LoginRequestDTO dto){
+        MemberResponseDTO.LoginResponseDTO responseDTO = memberCommandService.login(dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, responseDTO);
+    }
 }
+
+

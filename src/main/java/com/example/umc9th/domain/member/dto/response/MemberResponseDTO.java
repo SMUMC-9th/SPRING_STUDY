@@ -16,4 +16,11 @@ public class MemberResponseDTO {
                     .build();
         }
     }
+
+    @Builder
+    public record LoginResponseDTO(
+            Long id,
+            String accessToken,
+            String refreshToken
+    ) {}
 }
