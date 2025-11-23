@@ -5,6 +5,7 @@ import com.example.umc9th.global.auth.CustomAccessDeniedHandler;
 import com.example.umc9th.global.auth.CustomEntryPoint;
 import com.example.umc9th.global.security.jwt.JwtFilter;
 import com.example.umc9th.global.security.jwt.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,7 @@ public class SecurityConfig {
     private final CustomDetailService customDetailService;
     private final CustomEntryPoint customEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final ObjectMapper objectMapper;
 
     private final String[] allowUrl = {
             "/auth/sign-up",
@@ -68,7 +70,7 @@ public class SecurityConfig {
 
     @Bean
     Filter jwtFilter() {
-        return new JwtFilter(jwtUtil, customDetailService);
+        return new JwtFilter(jwtUtil, customDetailService, objectMapper);
     }
 
     @Bean

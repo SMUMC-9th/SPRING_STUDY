@@ -1,6 +1,6 @@
 package com.example.umc9th.global.security.jwt;
 
-import com.example.umc9th.global.apiPayload.ApiResponse;
+import com.example.umc9th.global.apiPayload.ErrorResponseUtil;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.auth.CustomDetailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +22,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final CustomDetailService customDetailService;
+    private final ObjectMapper objectMapper;
 
 
     @Override
@@ -36,6 +37,13 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
             token = token.substring(7);
+
+
+            // 토큰 만료 및 서명 검증
+            if(!jwtUtil.isValid(token)) {
+                ErrorResponseUtil.sendError(response, GeneralErrorCode.INVALID_TOKEN, objectMapper);
+                return;
+            }
 
             // 토큰에서 username 꺼내기
             String username = jwtUtil.getUsername(token);
@@ -59,13 +67,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            ApiResponse<Object> error = ApiResponse.onFailure(GeneralErrorCode.UNAUTHORIZED_401);
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(response.getOutputStream(), error);
+            ErrorResponseUtil.sendError(response, GeneralErrorCode.UNAUTHORIZED_401, objectMapper);
         }
     }
 }
