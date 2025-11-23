@@ -10,4 +10,12 @@ public class MemberResponseDTO {
     public static class SignUpResponseDTO {
         private Long id;
     }
+
+    @Getter
+    @Builder
+    public static class LoginResponseDTO {
+        private Long id;
+        private String accessToken;
+        private String refreshToken;
+    }
 }
