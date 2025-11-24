@@ -3,6 +3,8 @@ package com.example.umc9th.domain.member.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Builder
@@ -21,4 +23,7 @@ public class Member {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }

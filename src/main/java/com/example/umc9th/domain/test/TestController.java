@@ -1,6 +1,6 @@
 package com.example.umc9th.domain.test;
 
-import com.example.umc9th.global.apiPayload.ApiResponse;
+import com.example.umc9th.global.apiPayload.GlobalResponse;
 import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
@@ -24,8 +24,8 @@ public class TestController {
         return "Hello World";
     }*/
 
-    public ApiResponse<String> test() {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, "Hello World");
+    public GlobalResponse<String> test() {
+        return GlobalResponse.onSuccess(GeneralSuccessCode.OK, "Hello World");
     }
 
     @GetMapping("/exception")

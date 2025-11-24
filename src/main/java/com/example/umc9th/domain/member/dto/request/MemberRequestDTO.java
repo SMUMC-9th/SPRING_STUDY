@@ -1,13 +1,9 @@
 package com.example.umc9th.domain.member.dto.request;
 
-import lombok.Getter;
-
-
 public class MemberRequestDTO {
 
-    @Getter
-    public static class SignUpRequestDTO {
-        private String username;
-        private String password;
-    }
+    public record SignUpRequestDTO(String username, String password) {}
+
+    public record LoginRequestDTO(String username, String password) {}
+
 }
