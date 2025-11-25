@@ -78,4 +78,12 @@ public class JwtUtil {
                 .build()
                 .parseSignedClaims(token);
     }
+
+    public long getAccessExpirationMillis() {
+        return accessExpiration.toMillis();
+    }
+
+    public long getRefreshExpirationMillis() {
+        return refreshExpiration.toMillis();
+    }
 }

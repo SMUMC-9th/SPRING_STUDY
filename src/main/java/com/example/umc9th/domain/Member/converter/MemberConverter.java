@@ -3,6 +3,7 @@ package com.example.umc9th.domain.Member.converter;
 import com.example.umc9th.domain.Member.dto.req.MemberRequestDTO;
 import com.example.umc9th.domain.Member.dto.res.MemberResponseDTO;
 import com.example.umc9th.domain.Member.entity.Member;
+import com.example.umc9th.global.security.jwt.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class MemberConverter {
@@ -27,6 +28,14 @@ public class MemberConverter {
                 .id(member.getId())
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .build();
+    }
+
+    public static MemberResponseDTO.LoginResponseDTO toLoginResponseDTO(Member member, JwtUtil jwtUtil) {
+        return MemberResponseDTO.LoginResponseDTO.builder()
+                .id(member.getId())
+                .accessToken(jwtUtil.createAccessToken(member))
+                .refreshToken(jwtUtil.createRefreshToken(member))
                 .build();
     }
 }
