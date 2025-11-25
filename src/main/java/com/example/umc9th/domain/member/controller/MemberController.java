@@ -9,9 +9,11 @@ import com.example.umc9th.global.exception.GeneralSuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -23,5 +25,9 @@ public class MemberController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK,MemberResponseDTO.SignUpResponseDTO.from(member));
     }
 
-
+    @PostMapping("/login")
+    public ApiResponse<MemberResponseDTO.LoginResponseDTO> signIn(@RequestBody MemberRequestDTO.LoginRequestDTO dto){
+        MemberResponseDTO.LoginResponseDTO responseDTO = memberCommandService.login(dto);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, responseDTO);
+    }
 }

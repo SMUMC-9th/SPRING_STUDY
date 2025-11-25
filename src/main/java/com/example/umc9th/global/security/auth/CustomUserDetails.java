@@ -1,4 +1,4 @@
-package com.example.umc9th.global.auth;
+package com.example.umc9th.global.security.auth;
 
 import com.example.umc9th.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;

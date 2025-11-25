@@ -22,4 +22,11 @@ public class MemberResponseDTO {
             String accessToken,
             String refreshToken
     ) {}
+
+    @Builder
+    public record LoginResponseDTO(
+            Long id,
+            String accessToken,
+            String refreshToken
+    ) {}
 }
