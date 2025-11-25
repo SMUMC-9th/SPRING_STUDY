@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.member.entity;
 
+import com.example.umc9th.domain.member.enums.MemberRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,13 @@ public class Member {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
 }
