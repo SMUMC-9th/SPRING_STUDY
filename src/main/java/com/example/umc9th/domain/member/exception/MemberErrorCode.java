@@ -16,7 +16,8 @@ public enum MemberErrorCode implements BaseErrorCode {
     DUPLICATE_USERNAME(HttpStatus.CONFLICT, "MEMBER_409", "이미 존재하는 사용자명입니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "MEMBER_401", "유효하지 않은 토큰입니다."),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "MEMBER_401", "만료된 토큰입니다."),
-    OAUTH_TOKEN_FAIL(HttpStatus.BAD_REQUEST,"MEMBER400","토큰DTO를 변경 할 수 없습니다.")
+    OAUTH_TOKEN_FAIL(HttpStatus.BAD_REQUEST,"MEMBER400","토큰DTO를 변경 할 수 없습니다."),
+    OAUTH_USER_INFO_FAIL(HttpStatus.FORBIDDEN,"MEMBER_403_2","사용자 정보를 가져올 수 없습니다.")
     ;
 
     private final HttpStatus Status;
