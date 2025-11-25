@@ -8,6 +8,7 @@ import com.example.umc9th.global.jwt.exception.CustomEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -41,6 +42,7 @@ public class SecurityConfig {
     private String[] allowUrl = {
             "/auth/sign-up",
             "/auth/login", // 로그인 URL 추가
+            "/oauth2/**",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
@@ -64,6 +66,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(customEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler)
                 )
+                .oauth2Login(Customizer.withDefaults())
 //                // formLogin 설정
 //                .formLogin(formLogin -> formLogin
 //                        // Form login에서 사용하는 SecurityContextRepository 설정
