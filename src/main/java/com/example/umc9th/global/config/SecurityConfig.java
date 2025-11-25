@@ -9,6 +9,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -35,10 +36,12 @@ public class SecurityConfig {
     private final CustomEntryPoint customEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    // 아래 3개는 Swagger에 대한 URL
     private String[] allowUrl = {
         "/auth/sign-up",
         "/auth/login",
+        "/auth/oauth2/callback/kakao",
+        "/oauth2/**",
+        "/login/oauth2/**",
         "/swagger-ui/**",
         "/swagger-resources/**",
         "/v3/api-docs/**",
@@ -53,6 +56,8 @@ public class SecurityConfig {
             )
             .csrf(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .oauth2Login(Customizer.withDefaults())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling(exception -> exception
