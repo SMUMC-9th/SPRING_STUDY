@@ -1,5 +1,6 @@
 package com.example.umc9th.config;
 
+import com.example.umc9th.domain.member.service.command.CustomOAuth2UserService;
 import com.example.umc9th.global.jwt.JwtFilter;
 import com.example.umc9th.global.jwt.JwtUtil;
 import com.example.umc9th.global.auth.CustomUserDetailsService;
@@ -8,6 +9,7 @@ import com.example.umc9th.global.jwt.exception.CustomEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -36,11 +38,13 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomEntryPoint customEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     // 아래 3개는 Swagger에 대한 URL
     private String[] allowUrl = {
             "/auth/sign-up",
             "/auth/login", // 로그인 URL 추가
+            "/oauth2/**",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
@@ -64,6 +68,12 @@ public class SecurityConfig {
                         .authenticationEntryPoint(customEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler)
                 )
+                .oauth2Login((oauth2) -> oauth2
+                        .defaultSuccessUrl("/swagger-ui/index.html", true) // 로그인 성공 시 리디렉션될 경로
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                            .userService(customOAuth2UserService))
+                        .redirectionEndpoint(endpoint -> endpoint
+                            .baseUri("/oauth2/callback/*")))
 //                // formLogin 설정
 //                .formLogin(formLogin -> formLogin
 //                        // Form login에서 사용하는 SecurityContextRepository 설정
