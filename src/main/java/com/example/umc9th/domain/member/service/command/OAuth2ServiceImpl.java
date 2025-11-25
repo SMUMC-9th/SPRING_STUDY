@@ -107,8 +107,11 @@ public class OAuth2ServiceImpl implements OAuth2Service {
         }
 
         // 3. 회원가입 또는 로그인 처리
-        // 카카오 ID를 email로 사용
+        // 카카오 ID를 email로 사용 (이메일이 없는 경우 대비 fallback, 있으면 카카오에 등록된 이메일을 사용)
         String email = profile.getId().toString() + "@kakao.com";
+        if (profile.getKakao_account() != null && profile.getKakao_account().getEmail() != null) {
+            email = profile.getKakao_account().getEmail();
+        }
         String username = profile.getProperties() != null
             ? profile.getProperties().getNickname() + "_" + profile.getId()
             : "KakaoUser_" + profile.getId();
