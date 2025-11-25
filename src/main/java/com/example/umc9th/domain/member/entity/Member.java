@@ -21,4 +21,11 @@ public class Member {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "email", unique = true)
+    private String email;
+
+    @Column(name = "role", nullable = false)
+    @Builder.Default
+    private String role = "ROLE_USER";
+
 }
