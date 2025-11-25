@@ -8,6 +8,7 @@ import com.example.umc9th.global.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,6 +33,7 @@ public class SecurityConfig {
     private String[] allowUrl = {
             "/auth/sign-up",
             "/auth/login", // 로그인 URL 추가
+            "/oauth2/**",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
@@ -55,6 +57,7 @@ public class SecurityConfig {
                         .securityContextRepository(securityContextRepository())
                         .defaultSuccessUrl("/swagger-ui/index.html")
                 )
+                .oauth2Login(Customizer.withDefaults())
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
