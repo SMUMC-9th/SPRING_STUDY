@@ -2,6 +2,7 @@ package com.example.umc9th.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -46,6 +47,7 @@ public class SecurityConfig {
                         // 로그인 성공 시 URL, 보통은 SuccessfulHandler를 많이 사용하지만 간단하게 보기 위해 이 방식 사용
                         .defaultSuccessUrl("/swagger-ui/index.html")
                 )
+                .oauth2Login(Customizer.withDefaults()) //oauth
                 // 세션 관리 방식 설정, IF_REQUIRED는 필요 시에만 세션을 생성
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
