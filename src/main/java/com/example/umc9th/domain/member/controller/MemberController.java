@@ -30,8 +30,8 @@ public class MemberController {
         MemberResponseDTO.LoginResponseDTO responseDTO = memberCommandService.login(dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, responseDTO);
     }
-    @GetMapping("/oauth2/callback/kakao")
-    public ApiResponse<MemberResponseDTO.LoginResponseDTO> loginWithKakao(@RequestParam("code") String code) {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, oAuth2Service.login(code));
-    }
+//    @GetMapping("/oauth2/callback/kakao")
+//    public ApiResponse<MemberResponseDTO.LoginResponseDTO> loginWithKakao(@RequestParam("code") String code) {
+//        return ApiResponse.onSuccess(GeneralSuccessCode.OK, oAuth2Service.login(code));
+//    }
 }
