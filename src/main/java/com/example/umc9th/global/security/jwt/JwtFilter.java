@@ -24,9 +24,23 @@ public class JwtFilter extends OncePerRequestFilter {
     private final CustomDetailService customDetailService;
     private final ObjectMapper objectMapper;
 
+    private static final String[] EXCLUDE_URLS = {
+            "/oauth2/authorization/kakao",
+            "/auth/callback/kakao",
+    };
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String path = request.getRequestURI();
+
+        for (String exclude : EXCLUDE_URLS) {
+            if (path.startsWith(exclude)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+        }
+
         try {
             // 헤더에서 토큰 추출
             String token = request.getHeader("Authorization");

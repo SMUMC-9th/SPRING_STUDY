@@ -3,6 +3,7 @@ package com.example.umc9th.global.security.config;
 import com.example.umc9th.global.auth.CustomDetailService;
 import com.example.umc9th.global.auth.CustomAccessDeniedHandler;
 import com.example.umc9th.global.auth.CustomEntryPoint;
+import com.example.umc9th.global.config.CorsConfig;
 import com.example.umc9th.global.security.jwt.JwtFilter;
 import com.example.umc9th.global.security.jwt.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,12 +34,15 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
 
     private final String[] allowUrl = {
-            "/auth/sign-up",
-            "/auth/login",
+            "/auth/**",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
+
+            "/oauth2/authorization/kakao",
     };
+
+    private final CorsConfig corsConfig;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,8 +51,11 @@ public class SecurityConfig {
                         .requestMatchers(allowUrl).permitAll()
                         .anyRequest().authenticated()
                 )
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .oauth2Login(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(customEntryPoint)
