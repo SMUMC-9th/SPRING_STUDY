@@ -34,14 +34,12 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
 
     private final String[] allowUrl = {
-            "/auth/sign-up",
-            "/auth/login",
+            "/auth/**",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
 
             "/oauth2/authorization/kakao",
-            "/auth/callback/kakao",
     };
 
     private final CorsConfig corsConfig;
