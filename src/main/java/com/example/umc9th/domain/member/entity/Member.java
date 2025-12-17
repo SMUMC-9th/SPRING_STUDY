@@ -26,4 +26,12 @@ public class Member {
     @Column(name = "password", nullable = false)
     private String password;
 
+
+    @Column(name = "email", unique = true)
+    private String email;
+
+    @Column(name = "role")
+    private String role;
+
+
 }

@@ -19,7 +19,7 @@ public class MemberController {
 
     private final MemberCommandService memberCommandService;
 
-    @PostMapping("/sign-up")
+    @PostMapping("member/sign-up")
     public ApiResponse<MemberResponseDTO.SignUpResponseDTO> signUp(@RequestBody MemberRequestDTO.SignUpRequestDTO dto) {
         Member member = memberCommandService.signUp(dto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK,MemberResponseDTO.SignUpResponseDTO.from(member));
@@ -31,5 +31,3 @@ public class MemberController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, responseDTO);
     }
 }
-
-

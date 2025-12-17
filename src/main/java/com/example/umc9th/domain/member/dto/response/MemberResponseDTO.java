@@ -18,6 +18,12 @@ public class MemberResponseDTO {
     }
 
     @Builder
+    public record MemberTokenDTO(
+            String accessToken,
+            String refreshToken
+    ) {}
+
+    @Builder
     public record LoginResponseDTO(
             Long id,
             String accessToken,

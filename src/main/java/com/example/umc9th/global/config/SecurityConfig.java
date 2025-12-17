@@ -9,6 +9,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -38,29 +39,22 @@ public class SecurityConfig {
     };
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(allowUrl).permitAll()
                         .anyRequest().authenticated()
                 )
+                .cors(cors -> cors.configurationSource(CorsConfig.apiConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .oauth2Login(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(customEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler)
                 )
-//                .formLogin(formLogin -> formLogin
-//                        .securityContextRepository(securityContextRepository())
-//                        .defaultSuccessUrl("/swagger-ui/index.html")
-//                )
-//                .sessionManagement(sessionManagement -> sessionManagement
-//                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                )
-//                .securityContext(context -> context
-//                        .securityContextRepository(securityContextRepository())
-//                )
         ;
 
         return http.build();
